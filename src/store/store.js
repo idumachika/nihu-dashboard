@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Users from './modules/users'
+import Users from './modules/user/users'
 import VuexPersist from 'vuex-persist'
 
 Vue.use(Vuex);
 
 const vuexPersist = new VuexPersist({
-  key: '**-jive-data-00',
+  key: '**-jive-data-00-**',
   storage: localStorage
 });
 
@@ -24,7 +24,7 @@ export default new Vuex.Store({
 
   },
   modules: {
-    Users
+    User: Users
   },
   plugins: [vuexPersist.plugin]
 });

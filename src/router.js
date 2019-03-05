@@ -1,40 +1,57 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Login from './views/Login/Login.vue'
 import Store from './store/store'
+import Dashboard from './views/Dashboard/Dashboard.vue';
+import MainView from './components/Layout.vue';
 
 Vue.use(Router);
 
-function authenticate(to, from, next) {
-    if (Store.getters.IS_AUTHENTICATED)
-        next();
-    else
-        next(from.fullPath);
-}
-
-export default new Router({
+const router = new Router({
     routes: [
         {
             path: '/',
-            name: 'home',
-            component: Home,
+            name: 'login',
+            component: Login,
+            meta: {
+                public: true,  // Allow access to even if not logged in
+                onlyWhenLoggedOut: true
+            }
         },
         {
-            path: '/about',
-            name: 'about',
-            beforeEnter: (to, from, next) => authenticate(to, from, next),
+            path: '/dashboard',
+            name: 'dashboard',
+            // beforeEnter: (to, from, next) => authenticate(to, from, next),
 // route level code-splitting
 // this generates a separate chunk (about.[hash].js) for this route
 // which is lazy-loaded when the route is visited.
-            component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+            component: Dashboard,
         },
         {
             path: '/logout',
             name: 'logout',
-            beforeEnter: (to, from, next) => {
-                Store.dispatch('UNAUTHORISE');
-                next('/');
-            }
         }
     ]
-})
+});
+
+
+router.beforeEach((to, from, next) => {
+    const isPublic = to.matched.some(record => record.meta.public);
+    const onlyWhenLoggedOut = to.matched.some(record => record.meta.onlyWhenLoggedOut);
+    const loggedIn = Store.getters.IS_AUTHENTICATED;
+
+    if (!isPublic && !loggedIn) {
+        return next({
+            name: 'login',
+        });
+    }
+
+    // Do not allow user to visit login page or register page if they are logged in
+    if (loggedIn && onlyWhenLoggedOut) {
+        return next({name: 'dashboard'});
+    }
+
+    next();
+});
+
+export default router;
