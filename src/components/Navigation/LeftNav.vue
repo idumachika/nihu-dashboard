@@ -28,6 +28,20 @@
                     <i class="mdi mdi mdi-cash-multiple menu-icon"></i>
                 </router-link>
             </li>
+             <li class="nav-item" v-bind:class="{ active: 'credits' === currentPage }">
+                <router-link class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                             aria-controls="ui-basic" to="credits">
+                    <span class="menu-title">Credit Wallet</span>
+                    <i class="mdi mdi mdi-cash-multiple menu-icon"></i>
+                </router-link>
+            </li>
+             <li class="nav-item" v-bind:class="{ active: 'admin' === currentPage }">
+                <router-link class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                             aria-controls="ui-basic" to="admin">
+                    <span class="menu-title">Add Admin</span>
+                    <i class="mdi-account-box menu-icon"></i>
+                </router-link>
+            </li>
         </ul>
     </nav>
 </template>
