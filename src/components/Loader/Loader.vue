@@ -3,11 +3,12 @@
         <loading :active.sync="isLoading"
                  :can-cancel="false"
                  :on-cancel="onCancel"
-                 background-color='#d7d7d7'
+                 :background-color="bgColor"
                  v-bind:height=height
                  v-bind:width=width
                  color="#ef483e"
-                 :is-full-page="fullPage"></loading>
+                 v-bind:class="{ showLoader: !showFull}"
+                 :is-full-page="showFull"></loading>
     </div>
 </template>
 
@@ -19,12 +20,18 @@
 
     export default {
         name: 'Loader',
+        props: ['showFull'],
+        computed: {
+            bgColor() {
+                return (this.showFull) ? '#d7d7d7' : ''
+            }
+        },
         data() {
             return {
                 isLoading: true,
                 width: 65,
                 height: 65,
-                fullPage: true
+                fullPage: false
             }
         },
         components: {
@@ -37,3 +44,9 @@
         }
     }
 </script>
+
+<style scoped>
+    .showLoader {
+        position: relative;
+    }
+</style>

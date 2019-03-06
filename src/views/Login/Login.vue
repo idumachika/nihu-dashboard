@@ -1,6 +1,6 @@
 <template>
     <div class="container-scroller">
-        <Loader v-if="loading"/>
+        <Loader v-if="loading" :show-full="true"/>
         <div class="container-fluid page-body-wrapper full-page-wrapper">
             <div class="content-wrapper d-flex align-items-center auth">
                 <div class="row w-100">

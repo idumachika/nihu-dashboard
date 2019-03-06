@@ -6,6 +6,7 @@ import {ApiService} from './services/api.service'
 import VueToastr2 from 'vue-toastr-2'
 import 'vue-toastr-2/dist/vue-toastr-2.min.css'
 
+
 window.toastr = require('toastr');
 
 
@@ -13,10 +14,9 @@ window.toastr = require('toastr');
 ApiService.init('http://jive-core.herokuapp.com/api/v1');
 
 if (store.dispatch('isLoggedIn'))
-    ApiService.setHeader(store.getters.AUTHENTICATION_TOKEN);
+    ApiService.setHeader(store.getters.GET_AUTH_TOKEN);
 else
-    store.dispatch('UNAUTHORISE_USER').then(() => {
-    });
+    store.dispatch('UNSET_USER').then(() => {});
 
 Vue.config.productionTip = false;
 
@@ -27,3 +27,4 @@ new Vue({
 }).$mount('#app');
 
 Vue.use(VueToastr2);
+

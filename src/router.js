@@ -33,7 +33,7 @@ const router = new Router({
         },
         {
             path: '/payments',
-            name: 'payment',
+            name: 'payments',
             component: PaymentList,
         },
     ]
