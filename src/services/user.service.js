@@ -21,7 +21,18 @@ const userService = {
         }).catch(() => {
             return Promise.reject(false);
         });
-    }
+    },
+    listpayment: async (token) => {
+        return await ApiService.customRequest({
+            headers: {'Authorization': token},
+            method: "GET",
+            url: ApiService.getBaseUrl() + "/payments/list"
+        }).then((res) => {
+            return Promise.resolve(res.data.data);
+        }).catch(() => {
+            return Promise.reject(false);
+        });
+    },
 };
 
 export {userService};

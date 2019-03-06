@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Login from './views/Login/Login.vue'
 import Store from './store/store'
 import Dashboard from './views/Dashboard/Dashboard.vue';
-import MainView from './components/Layout.vue';
+import PaymentList from './views/PaymentList/Payment.vue'
 
 Vue.use(Router);
 
@@ -30,7 +30,12 @@ const router = new Router({
         {
             path: '/logout',
             name: 'logout',
-        }
+        },
+        {
+            path: '/payments',
+            name: 'payment',
+            component: PaymentList,
+        },
     ]
 });
 
