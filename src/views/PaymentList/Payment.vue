@@ -15,9 +15,9 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title"></h4>
-                                <Datatable :fields="fields" :data="paymentsData" :perPage="1">
-                                </Datatable>
-                                <Loader v-if="loading" :showFull="false"/>
+                                <!-- <Datatable :fields="fields" :data="paymentsData" :perPage="1"> -->
+                                <!-- </Datatable> -->
+                                <Datatable :columns="columns" :data="paymentsData" :loading="loading"></Datatable>
                             </div>
                         </div>
                     </div>
@@ -29,15 +29,19 @@
 
 <script>
     import Layout from '../../components/Layout';
-    import Datatable from '../../components/Datatable/Datatable';
     import {paymentService} from "../../services/payments.service";
-    import Loader from "../../components/Loader/Loader";
+    import Datatable from '../../components/Datatable/_Datatable';
+
 
     export default {
         name: "Payment",
         data() {
             return {
-                fields: ['Reference', 'Amount', 'User', 'Subscription Plan', 'Status'],
+                title: "Payement",
+                columns: ['Reference', 'Amount', 'User', 'Subscription Plan', 'Status'],
+                perPage: 10,
+                sortable: false,
+                searchable: true,
                 loading: true,
                 paymentsData: []
             }
@@ -56,7 +60,7 @@
                 this.loading = false;
             }).catch((err) => window.console.log(err));
         },
-        components: {Layout, Datatable, Loader}
+        components: {Layout, Datatable}
     }
 </script>
 
