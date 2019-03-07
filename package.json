@@ -18,7 +18,6 @@
     "vue-materialize-datatable": "^0.7.6",
     "vue-router": "^3.0.1",
     "vue-toastr-2": "0.0.10",
-    "vuetable-2": "^1.7.5",
     "vuex": "^3.0.1",
     "vuex-persist": "^2.0.0"
   },

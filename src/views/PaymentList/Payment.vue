@@ -30,14 +30,14 @@
 <script>
     import Layout from '../../components/Layout';
     import {paymentService} from "../../services/payments.service";
-    import Datatable from '../../components/Datatable/_Datatable';
+    import Datatable from '../../components/Datatable/Datatable';
 
 
     export default {
         name: "Payment",
         data() {
             return {
-                title: "Payement",
+                title: "Payment",
                 columns: ['Reference', 'Amount', 'User', 'Subscription Plan', 'Status'],
                 perPage: 10,
                 sortable: false,
