@@ -20,7 +20,7 @@
                                 <h4 class="font-weight-normal mb-3">Weekly Sales
                                     <i class="mdi mdi-chart-line mdi-24px float-right"></i>
                                 </h4>
-                                <h2 class="mb-5">$ 15,0000</h2>
+                                <h2 class="mb-5">{{dashboardData.total_events}}</h2>
                                 <h6 class="card-text">Increased by 60%</h6>
                             </div>
                         </div>
@@ -386,10 +386,34 @@
 
 <script>
     import Layout from '../../components/Layout';
+    import {dashboardService} from "../../services/Dashboard.Service";
+
 
     export default {
         name: "Dashboard",
-        components: {Layout}
+        components: {Layout},
+        data() {
+            return {
+                loading: true,
+                dashboardData:"",
+            }
+        },
+        async created() {
+            await dashboardService.dashboardstatistic()
+            .then((response) => {
+                this.loading = false;
+                this.dashboardData = response.data;
+
+                //     response.forEach(({total_events: total_events, total_successful_transactions: total_successful_transactions, total_verifications: total_verifications}) => {
+                //     this.dashboardData.push({
+                //         TotalEvent:total_events,
+                //         SuccessfullTransanction:total_successful_transactions,
+                //         TotalVerifications:total_verifications,
+                        
+                //     });
+                // });
+            }).catch((err) => window.console.log(err));
+        },
     }
 </script>
 

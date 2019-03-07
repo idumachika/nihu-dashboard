@@ -11,7 +11,37 @@
                     </h3>
                 </div>
             </div>
-        <div class="container-scroller">
+            <div class="content-wrapper  align-items-center auth">
+            <Loader v-if="loading" :show-full="true"/>
+            <div class="col-md-6 grid-margin stretch-card">
+            <div class="card" @submit.prevent="post"> 
+
+                <div class="card-body">
+                <form class="forms-sample">
+                    <div class="form-group">
+                      <label for="exampleInputUsername1">Username</label>
+                      <input type="text" class="form-control" id="exampleInputUsername1" v-model="user"  placeholder="idumachika@gmail.com">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Amount Paid</label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" v-model="amount_paid" placeholder="Amount paid eg 40000">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Bonus Top up</label>
+                      <input type="text" class="form-control" id="exampleInputPassword1"  v-model="description" placeholder="Bonus top up">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputConfirmPassword1">Unit Worth</label>
+                      <input type="text" class="form-control" id="exampleInputConfirmPassword1" v-model="unit_worth" placeholder="Unit worth eg 50000">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-gradient-primary mr-2">Top Up Wallet</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            </div>
+            <!-- <div class="container-scroller">
         <Loader v-if="loading" :show-full="true"/>
         <div class="container-fluid page-body-wrapper full-page-wrapper">
             <div class="content-wrapper  align-items-center auth">
@@ -52,12 +82,11 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
         </div>
         
     </Layout>
 </template>
-<!-- container-scroller -->
 
 <script>
     import Loader from "../../components/Loader/Loader";

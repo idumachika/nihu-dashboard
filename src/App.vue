@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <router-view/>
-        <VuInjector src="/static/js/vendor.js"/>
+        <!-- <VuInjector src="/static/js/vendor.js"/> -->
     </div>
 </template>
 
@@ -11,7 +11,7 @@
 
     Vue.use(VuInjector);
     export default {
-        components: {VuInjector}
+        // components: {VuInjector}
     }
 </script>
 <style>

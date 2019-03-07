@@ -16,43 +16,59 @@
                 </a>
             </li>
             <li class="nav-item" v-bind:class="{ active: 'dashboard' === currentPage }">
-                <router-link class="nav-link" to="dashboard">
+                <router-link class="nav-link" :to="{name: 'dashboard'}">
                     <span class="menu-title">Dashboard</span>
                     <i class="mdi mdi-home menu-icon"></i>
                 </router-link>
             </li>
             <li class="nav-item" v-bind:class="{ active: 'payments' === currentPage }">
-                <router-link class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
-                             aria-controls="ui-basic" to="payments">
+                <router-link class="nav-link" :to="{name: 'payments'}">
                     <span class="menu-title">Payments</span>
                     <i class="mdi mdi mdi-cash-multiple menu-icon"></i>
                 </router-link>
             </li>
-             <li class="nav-item" v-bind:class="{ active: 'credits' === currentPage }">
-                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
-                             aria-controls="ui-basic" >
+
+            <li class="nav-item" v-bind:class="{ active: 'creditWallet' === currentPage }">
+                <a class="nav-link collapsed" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                   aria-controls="ui-basic">
                     <span class="menu-title">Wallet</span>
-                    <i class="mdi mdi mdi-cash-multiple menu-icon"></i>
+                    <i class="menu-arrow"></i>
+                    <i class="mdi mdi-google-wallet menu-icon"></i>
                 </a>
-            <div class="collapse show" id="ui-basic" style="">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link"  href="../../pages/ui-features/buttons.html">View Wallet History </a></li>
-                <li class="nav-item"> <router-link class="nav-link" to="credits" href="../../pages/ui-features/typography.html">Credit Wallet</router-link></li>
-              </ul>
-            </div>
+                <div class="collapse" id="ui-basic" style="" v-bind:class="{ show: 'creditWallet' === currentPage }">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <router-link class="nav-link" :to="{name: 'wallets'}">
+                                View Wallet History
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" :to="{name: 'creditWallet'}"
+                                         v-bind:class="{ active: 'creditWallet' === currentPage }">
+                                Credit Wallet
+                            </router-link>
+                        </li>
+                    </ul>
+                </div>
             </li>
-             <li class="nav-item" v-bind:class="{ active: 'admin' === currentPage }">
-                <a class="nav-link" data-toggle="collapse" href="#ui-basics" aria-expanded="false"
-                             aria-controls="ui-basic" >
-                    <span class="menu-title"> Admin</span>
-                    <i class="mdi mdi-account-circle mdi-13px menu-icon"></i>
+            <li class="nav-item" v-bind:class="{ active: 'adminAdd' === currentPage }">
+                <a class="nav-link collapsed" data-toggle="collapse" href="#ui-basic2" aria-expanded="false"
+                   aria-controls="ui-basic">
+                    <span class="menu-title">Admin</span>
+                    <i class="menu-arrow"></i>
+                    <i class="mdi mdi-account-key menu-icon"></i>
                 </a>
-             <div class="collapse show" id="ui-basics" style="">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/buttons.html">List Admin</a></li>
-                <li class="nav-item"> <router-link class="nav-link" to="admin" href="../../pages/ui-features/typography.html">Add Admin</router-link></li>
-              </ul>
-            </div>
+                <div class="collapse" id="ui-basic2" style="" v-bind:class="{ show: 'adminAdd' === currentPage }">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="../../pages/ui-features/buttons.html">List
+                            Admin</a></li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" :to="{name: 'adminAdd'}"
+                                         v-bind:class="{ active: 'adminAdd' === currentPage }">Add Admin
+                            </router-link>
+                        </li>
+                    </ul>
+                </div>
             </li>
         </ul>
     </nav>
@@ -74,4 +90,4 @@
 
 <style scoped>
 
-</style>
+</style> 
