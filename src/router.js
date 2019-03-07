@@ -8,6 +8,7 @@ import PaymentList from './views/PaymentList/Payment.vue'
 Vue.use(Router);
 
 const router = new Router({
+    mode: 'history',
     routes: [
         {
             path: '/',
