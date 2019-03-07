@@ -46,7 +46,7 @@
                              aria-controls="ui-basic" >
                     <span class="menu-title"> Admin</span>
                     <i class="mdi mdi-account-circle mdi-13px menu-icon"></i>
-            </a>
+                </a>
              <div class="collapse show" id="ui-basics" style="">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/buttons.html">List Admin</a></li>

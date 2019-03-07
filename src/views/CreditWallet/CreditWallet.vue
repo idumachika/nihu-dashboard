@@ -11,7 +11,7 @@
                     </h3>
                 </div>
             </div>
-            <div class="container-scroller">
+        <div class="container-scroller">
         <Loader v-if="loading" :show-full="true"/>
         <div class="container-fluid page-body-wrapper full-page-wrapper">
             <div class="content-wrapper  align-items-center auth">
@@ -21,7 +21,6 @@
                             <div class="brand-logo">
                             </div>
                             <h4>Hello Admin! Credit wallet</h4>
-                            <!-- <h6 class="font-weight-light">Sign in to continue.</h6> -->
                             <form class="pt-3" @submit.prevent="post">
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
@@ -52,9 +51,7 @@
                     </div>
                 </div>
             </div>
-            <!-- content-wrapper ends -->
         </div>
-        <!-- page-body-wrapper ends -->
     </div>
         </div>
         
