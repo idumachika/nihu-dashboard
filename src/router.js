@@ -40,12 +40,12 @@ const router = new Router({
         },
         {
             path: '/credits',
-            name: 'credits',
+            name: 'creditWallet',
             component: Creditwallet,
         },
         {
-            path: '/admin',
-            name: 'admin',
+            path: '/admin/add',
+            name: 'adminAdd',
             component: AdminAccount,
         },
     ]
