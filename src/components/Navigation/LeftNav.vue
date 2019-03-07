@@ -29,18 +29,30 @@
                 </router-link>
             </li>
              <li class="nav-item" v-bind:class="{ active: 'credits' === currentPage }">
-                <router-link class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
-                             aria-controls="ui-basic" to="credits">
-                    <span class="menu-title">Credit Wallet</span>
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                             aria-controls="ui-basic" >
+                    <span class="menu-title">Wallet</span>
                     <i class="mdi mdi mdi-cash-multiple menu-icon"></i>
-                </router-link>
+                </a>
+            <div class="collapse show" id="ui-basic" style="">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link"  href="../../pages/ui-features/buttons.html">View Wallet History </a></li>
+                <li class="nav-item"> <router-link class="nav-link" to="credits" href="../../pages/ui-features/typography.html">Credit Wallet</router-link></li>
+              </ul>
+            </div>
             </li>
              <li class="nav-item" v-bind:class="{ active: 'admin' === currentPage }">
-                <router-link class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
-                             aria-controls="ui-basic" to="admin">
-                    <span class="menu-title">Add Admin</span>
-                    <i class="mdi-account-box menu-icon"></i>
-                </router-link>
+                <a class="nav-link" data-toggle="collapse" href="#ui-basics" aria-expanded="false"
+                             aria-controls="ui-basic" >
+                    <span class="menu-title"> Admin</span>
+                    <i class="mdi mdi-account-circle mdi-13px menu-icon"></i>
+            </a>
+             <div class="collapse show" id="ui-basics" style="">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/buttons.html">List Admin</a></li>
+                <li class="nav-item"> <router-link class="nav-link" to="admin" href="../../pages/ui-features/typography.html">Add Admin</router-link></li>
+              </ul>
+            </div>
             </li>
         </ul>
     </nav>
