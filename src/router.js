@@ -10,6 +10,7 @@ import AdminAccount from './views/AdminAccount/AdminAccount.vue'
 Vue.use(Router);
 
 const router = new Router({
+    mode: 'history',
     routes: [
         {
             path: '/',
