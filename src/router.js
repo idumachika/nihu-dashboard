@@ -4,6 +4,8 @@ import Login from './views/Login/Login.vue'
 import Store from './store/store'
 import Dashboard from './views/Dashboard/Dashboard.vue';
 import PaymentList from './views/PaymentList/Payment.vue'
+import Creditwallet from './views/CreditWallet/CreditWallet.vue'
+import AdminAccount from './views/AdminAccount/AdminAccount.vue'
 
 Vue.use(Router);
 
@@ -36,6 +38,16 @@ const router = new Router({
             path: '/payments',
             name: 'payments',
             component: PaymentList,
+        },
+        {
+            path: '/credits',
+            name: 'creditWallet',
+            component: Creditwallet,
+        },
+        {
+            path: '/admin/add',
+            name: 'adminAdd',
+            component: AdminAccount,
         },
     ]
 });
