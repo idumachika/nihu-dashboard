@@ -16,7 +16,11 @@
           <tbody>
 
             <tr v-for="(item, index) in (sortedActivity, filteredList)" v-if="data.length > 0">
-                <td v-for="col in columns"  :key="col" >{{itemValue(item, col)}}</td>
+                <td v-for="col in columns"  :key="col" v-html="itemValue(item, col)" >{{itemValue(item, col)}}</td>
+
+                <td v-if="actions.length > 0" v-for="(action) in actions" > 
+                    <button :class="action.class" v-bind="$attrs" @click="handleCallback(action.callback, filterObject(item, action.args))"> {{ action.text }} </button>
+                </td>
             </tr>
             <tr v-if="filteredList.length === 0">
                 <td v-if='search.length > 0' colspan="100" style='text-align: center'>
@@ -51,6 +55,7 @@ import axios from 'axios';
 import Loader from "../Loader/Loader";
 
 export default {
+    inheritAttrs: false,
   data: () => ({
     currentSort:'name',
     currentSortDir:'asc',
@@ -64,11 +69,13 @@ export default {
    props: {
       columns: Array,
       data: Array,
+      actions: Array,
       loading: Boolean,
       type: {
         type: String, // striped | hover
         default: 'Striped'
       },
+      handler: '',
       title: {
         type: String,
         default: ''
@@ -81,6 +88,20 @@ export default {
     components: {Loader},
 
   methods:{
+    filterObject(haystack, needle = []) {
+        // console.log(haystack);
+        let data = [];
+        if (needle.length === 0 || haystack.length == 0) return [];
+
+        needle.forEach((key) => {
+            if (haystack.hasOwnProperty(key))
+                data.push(haystack[key]);
+        });
+        return data;
+    },
+    handleCallback(callback, args) {
+        this.handler(callback, args); 
+    },   
     sort:function(s) {
       if(s === this.currentSort) {
         this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
@@ -98,7 +119,7 @@ export default {
     },
     itemValue (item, column) {
     return item[column]
-    }
+    },
   },
 
   computed: {
@@ -139,6 +160,13 @@ export default {
         totalPages () {
             return Math.ceil(this.data.length / this.perPage) * 1;
         },
+        action (){
+            if (data.Actions.length == 0) return;
+
+            data.Actions.forEach(({text: text}) => {
+                console.log(text);
+            });
+        }
       },
     created (){
         if( this.currentPage === 1){
