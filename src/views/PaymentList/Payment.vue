@@ -15,10 +15,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title"></h4>
-                                <!-- <Datatable :fields="fields" :data="paymentsData" :perPage="1"> -->
-                                <!-- </Datatable> -->
-                                <Datatable :columns="columns" :handler="handleChildCall" :data="paymentsData" :loading="loading" :actions="actions">
-                                <button type="button" v-bind="[{click: test}]" class="btn btn-gradient-success btn-sm">Edit</button> <button type="button" class="btn btn-sm btn-gradient-danger ">Delete</button>
+                                <Datatable :columns="columns" :data="paymentsData" @test="test" @deletePay="deletePay"
+                                           :loading="loading" :actions="actions">
                                 </Datatable>
                             </div>
                         </div>
@@ -35,32 +33,34 @@
     import Datatable from '../../components/Datatable/Datatable';
 
     const action = [
-                {
-                    class: 'btn btn-primary',
-                    actionType: 'click',
-                    callback: 'test',
-                    args: ['Reference', 'User'],
-                    text: 'Edit'
-                },
-                {
-                    class: 'btn btn-primary-danger',
-                    actionType: 'click',
-                    callback: 'delete',
-                    text: 'Delete'
-                }
-            ]
+        {
+            class: 'btn btn-primary',
+            actionType: 'click',
+            callback: 'test',
+            args: ['Reference', 'User'],
+            text: 'Edit'
+        },
+        {
+            class: 'btn btn-danger',
+            actionType: 'click',
+            callback: 'deletePay',
+            text: 'Delete'
+        }
+    ];
+
     export default {
         name: "Payment",
         data() {
             return {
                 title: "Payment",
-                columns: ['Reference', 'Amount', 'User', 'Subscription Plan', 'Status', 'Action'],
+                columns: ['Reference', 'Amount', 'User', 'Subscription Plan', 'Status'],
                 perPage: 10,
                 sortable: false,
                 searchable: true,
                 loading: true,
                 paymentsData: [],
-                actions: action
+                actions: action,
+                callbacks: ['test', 'delete ']
             }
         },
         async created() {
@@ -79,20 +79,16 @@
         },
         methods: {
             test(ref, name) {
-                window.console.log("Ref: "+ref);
-                window.console.log("User: "+name);
+                window.console.log("Ref: " + ref);
+                window.console.log("User: " + name);
             },
-            delete() {
+            deletePay() {
                 window.alert('deleted');
-            },
-            handleChildCall: function(methodToCall, argument) {
-                console.info(argument);
-                console.log("this."+methodToCall+".call(["+ argument +"])");
-                
-                eval("this."+methodToCall+".call("+ argument +")");
             }
         },
-        components: {Layout, Datatable}
+        components: {
+            Layout, Datatable
+        }
     }
 </script>
 
