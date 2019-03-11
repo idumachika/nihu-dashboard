@@ -17,7 +17,9 @@
                                 <h4 class="card-title"></h4>
                                 <!-- <Datatable :fields="fields" :data="paymentsData" :perPage="1"> -->
                                 <!-- </Datatable> -->
-                                <Datatable :columns="columns" :data="paymentsData" :loading="loading"></Datatable>
+                                <Datatable :columns="columns" :handler="handleChildCall" :data="paymentsData" :loading="loading" :actions="actions">
+                                <button type="button" v-bind="[{click: test}]" class="btn btn-gradient-success btn-sm">Edit</button> <button type="button" class="btn btn-sm btn-gradient-danger ">Delete</button>
+                                </Datatable>
                             </div>
                         </div>
                     </div>
@@ -32,18 +34,33 @@
     import {paymentService} from "../../services/payments.service";
     import Datatable from '../../components/Datatable/Datatable';
 
-
+    const action = [
+                {
+                    class: 'btn btn-primary',
+                    actionType: 'click',
+                    callback: 'test',
+                    args: ['Reference', 'User'],
+                    text: 'Edit'
+                },
+                {
+                    class: 'btn btn-primary-danger',
+                    actionType: 'click',
+                    callback: 'delete',
+                    text: 'Delete'
+                }
+            ]
     export default {
         name: "Payment",
         data() {
             return {
                 title: "Payment",
-                columns: ['Reference', 'Amount', 'User', 'Subscription Plan', 'Status'],
+                columns: ['Reference', 'Amount', 'User', 'Subscription Plan', 'Status', 'Action'],
                 perPage: 10,
                 sortable: false,
                 searchable: true,
                 loading: true,
-                paymentsData: []
+                paymentsData: [],
+                actions: action
             }
         },
         async created() {
@@ -59,6 +76,21 @@
                 });
                 this.loading = false;
             }).catch((err) => window.console.log(err));
+        },
+        methods: {
+            test(ref, name) {
+                window.console.log("Ref: "+ref);
+                window.console.log("User: "+name);
+            },
+            delete() {
+                window.alert('deleted');
+            },
+            handleChildCall: function(methodToCall, argument) {
+                console.info(argument);
+                console.log("this."+methodToCall+".call(["+ argument +"])");
+                
+                eval("this."+methodToCall+".call("+ argument +")");
+            }
         },
         components: {Layout, Datatable}
     }
