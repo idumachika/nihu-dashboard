@@ -6,6 +6,9 @@ import Dashboard from './views/Dashboard/Dashboard.vue';
 import PaymentList from './views/PaymentList/Payment.vue'
 import Creditwallet from './views/CreditWallet/CreditWallet.vue'
 import AdminAccount from './views/AdminAccount/AdminAccount.vue'
+import ListUser from './views/ListUser/ListUser.vue'
+
+
 
 Vue.use(Router);
 
@@ -48,6 +51,11 @@ const router = new Router({
             path: '/admin/add',
             name: 'adminAdd',
             component: AdminAccount,
+        },
+        {
+            path: '/list/user',
+            name: 'Listuser',
+            component: ListUser,
         },
     ]
 });

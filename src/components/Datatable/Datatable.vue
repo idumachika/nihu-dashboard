@@ -11,6 +11,7 @@
           <thead width="400px">
               <tr>
                 <th scope="col" v-for="column in columns" @click="sort(column)" :key="column" >{{column}} </th>
+
               </tr>
           </thead>
           <tbody>
@@ -40,6 +41,7 @@
     <div class="float-right">
         <button @click="prevPage" class="btn btn-outline-info btn-sm" v-bind:class="disable"><i class="fas fa-arrow-left"></i> Previous</button> &nbsp; &nbsp; &nbsp;
         <button @click="nextPage" class="btn btn-outline-info btn-sm" v-bind:class="disableNext">Next <i class="fas fa-arrow-right"></i></button>
+
     </div>
   </div>
 </div>

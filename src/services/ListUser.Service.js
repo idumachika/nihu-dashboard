@@ -1,8 +1,8 @@
 import {ApiService} from "./api.service";
 
-const listtransactionservice = {
-    listtransaction: async () => {
-        return await ApiService.get("/payments/list").then((res) => {
+const ListUserservice = {
+    ListUser: async () => {
+        return await ApiService.get("/admin/list/user").then((res) => {
             window.console.log(res.data.data);
             return Promise.resolve(res.data.data);
         }).catch(() => {
@@ -11,4 +11,6 @@ const listtransactionservice = {
     },
 };
 
-export {paymentService};
+export {ListUserservice};
+
+
