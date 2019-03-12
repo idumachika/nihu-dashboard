@@ -17,7 +17,7 @@
                                 <h4 class="card-title"></h4>
                                 <!-- <Datatable :fields="fields" :data="paymentsData" :perPage="1"> -->
                                 <!-- </Datatable> -->
-                                <Datatable :columns="columns" :data="userData" :loading="loading"></Datatable>
+                                <Datatable :columns="columns" :data="userData" :loading="loading" @test="test" :actions="actions"></Datatable>
                             </div>
                         </div>
                     </div>
@@ -33,8 +33,27 @@
     import Datatable from '../../components/Datatable/Datatable';
 
 
+    const action = [
+        {
+            class: 'btn btn-primary',
+            actionType: 'click',
+            callback: 'test',
+            args: ['Reference', 'User'],
+            text: 'Edit'
+        },
+        // {
+        //     class: 'btn btn-danger',
+        //     actionType: 'click',
+        //     callback: 'deletePay',
+        //     text: 'Delete'
+        // }
+    ];
+
+
     export default {
         name: "Listuser",
+
+        
         data() {
             return {
                 title: "Listuser",
@@ -43,7 +62,8 @@
                 sortable: false,
                 searchable: true,
                 loading: true,
-                userData: []
+                userData: [],
+                actions: []
             }
         },
         async created() {

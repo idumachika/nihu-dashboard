@@ -5,6 +5,8 @@ import store from './store/store'
 import {ApiService} from './services/api.service'
 import VueToastr2 from 'vue-toastr-2'
 import 'vue-toastr-2/dist/vue-toastr-2.min.css'
+import VModal from 'vue-js-modal'
+
 
 
 window.toastr = require('toastr');
@@ -26,5 +28,5 @@ new Vue({
     render: h => h(App)
 }).$mount('#app');
 
+Vue.use(VModal);
 Vue.use(VueToastr2);
-
