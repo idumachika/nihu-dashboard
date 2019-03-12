@@ -8,7 +8,6 @@ import 'vue-toastr-2/dist/vue-toastr-2.min.css'
 import VModal from 'vue-js-modal'
 
 
-
 window.toastr = require('toastr');
 
 
@@ -18,9 +17,13 @@ ApiService.init('http://jive-core.herokuapp.com/api/v1');
 if (store.dispatch('isLoggedIn'))
     ApiService.setHeader(store.getters.GET_AUTH_TOKEN);
 else
-    store.dispatch('UNSET_USER').then(() => {});
+    store.dispatch('UNSET_USER').then(() => {
+    });
 
 Vue.config.productionTip = false;
+
+Vue.use(VModal, {dialog: true, dynamic: true, injectModalsContainer: true});
+Vue.use(VueToastr2);
 
 new Vue({
     router,
@@ -28,5 +31,4 @@ new Vue({
     render: h => h(App)
 }).$mount('#app');
 
-Vue.use(VModal);
-Vue.use(VueToastr2);
+
