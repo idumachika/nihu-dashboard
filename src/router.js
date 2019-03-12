@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Login from './views/Login/Login.vue'
 import Store from './store/store'
 import Dashboard from './views/Dashboard/Dashboard.vue';
-import PaymentList from './views/PaymentList/Payment.vue'
+import PaymentList from './views/Payment/Payment.vue'
 import Creditwallet from './views/CreditWallet/CreditWallet.vue'
 import AdminAccount from './views/AdminAccount/AdminAccount.vue'
 import ListUser from './views/ListUser/ListUser.vue'

@@ -20,13 +20,16 @@
                     v-bind:key="index">
                     <td v-for="col in columns" :key="col" v-html="itemValue(item, col)">{{itemValue(item, col)}}
                     </td>
-
+                    <!--v-if="dontShowKey === action && dontShowValue === action.dontShowKey"-->
                     <td v-if="actions.length > 0">
-                        <button :class="action.class" class="btn-sm action-btn" v-bind="$attrs"
-                                v-for="(action) in actions"
-                                @click="handleCallback(action.callback, filterObject(item, action.args))"> {{
-                            action.text }}
-                        </button>
+                        <span v-for="(action) in actions">
+                            <button v-if="typeof action.showKey === 'undefined' || action.showKey.length === 0 || action.showWhen.indexOf(item[action.showKey]) !== -1"
+                                    :title="action.title || ''"
+                                    :class="action.class" class="btn-sm action-btn" v-bind="$attrs"
+                                    @click="handleCallback(action.callback, filterObject(item, action.args))">
+                                {{ action.text }}
+                            </button>
+                        </span>
                     </td>
                 </tr>
                 <tr v-if="filteredList.length === 0">
@@ -60,6 +63,7 @@
     /*eslint-disable*/
     import axios from 'axios';
     import Loader from "../Loader/Loader";
+
     export default {
         // inheritAttrs: false,
         data: () => ({
@@ -80,6 +84,8 @@
                 type: Boolean,
                 default: true
             },
+            dontShowKey: String,
+            dontShowValue: String,
             type: {
                 type: String, // striped | hover
                 default: 'Striped'
@@ -95,6 +101,9 @@
         },
         components: {Loader},
         methods: {
+            console: function (e) {
+                console.log(e);
+            },
             filterObject(haystack, needle = []) {
                 // console.log(haystack);
                 let data = [];
@@ -180,16 +189,20 @@
         /* width: 500px !important; */
         white-space: nowrap;
     }
+
     tr {
         white-space: nowrap;
     }
+
     .float-left {
         margin-top: 20px;
     }
+
     .float-right {
         margin-top: 20px
     }
-    .action-btn:not(:last-of-type) {
+
+    span > .action-btn {
         margin-right: 10px;
     }
 </style>
