@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="content-wrapper  align-items-center auth">
-            <Loader v-if="loading" :show-full="true"/>
+        <Loader v-if="loading" :show-full="true" loading-text="Creating Wallet..."/>
             <div class="col-md-6 grid-margin stretch-card">
             <div class="card" @submit.prevent="post"> 
 
@@ -120,6 +120,7 @@
                     this.$toastr.error(error.message, "Wallet Topup failed!", {timeOut: 5000});
                 });
                 this.loading = false;
+
             }
             
         },

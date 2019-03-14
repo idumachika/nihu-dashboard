@@ -9,6 +9,13 @@ const ListUserservice = {
             return Promise.reject(false);
         });
     },
+    blockUser: async (userId) => {
+        return await ApiService.post('/admin/user/'+userId+'/block').then((res) => {
+            return Promise.resolve(res.data.data);
+        }).catch(() => {
+            return Promise.reject(false);
+        });
+    },
 };
 
 export {ListUserservice};

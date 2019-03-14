@@ -82,7 +82,8 @@
                             Amount: "&#8358;" + amount,
                             User: user,
                             'Subscription Plan': sub,
-                            Status: status
+                            Status: status,
+                          
                         });
                     });
                     this.loading = false;
