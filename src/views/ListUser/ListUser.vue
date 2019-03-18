@@ -115,13 +115,10 @@
                 unBlockUser(uuid){
                     this.loadingText = "unBlocking User..."
                     this.isLoading = true;
-                    ListUserservice.unblockUser(uuid).then((response) => {
+                    ListUserservice.unblockUser(uuid).then((res) => {
                         this.isLoading= false;
-                        this.queryData = response;
-                     this.$toastr.response(response.message, "UnBlocking Succesfull!", {timeOut: 5000});
-
-                        
-                    }).catch((err) => this.$toastr.error(err.message || "UnBlocking failed", "Error!", {timeOut: 5000}));
+                    this.$toastr.success(res.message, {timeOut: 5000});
+        }).catch((err) => this.$toastr.error(err.message || "UnBlocking failed", "Error!", {timeOut: 5000}));
 
                     
                 }
