@@ -16,6 +16,13 @@ const ListUserservice = {
             return Promise.reject(false);
         });
     },
+    UnblockUser: async (userId) => {
+        return await ApiService.post('/admin/user/'+userId+'/unblock').then((res) => {
+            return Promise.resolve(res.data.data);
+        }).catch(() => {
+            return Promise.reject(false);
+        });
+    },
 };
 
 export {ListUserservice};

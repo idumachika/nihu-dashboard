@@ -192,6 +192,12 @@
                     this.dashboardData = res;
                 }).catch((err) => window.console.log(err));
         },
+        // async beforeRouteEnter (to, from, next) {
+        //     await dashboardService.fetchStats()
+        //         .then((res) => {
+        //             next(vm => vm.dashboardData = res);
+        //         }).catch((err) => window.console.log(err));
+        // }
     }
 </script>
 

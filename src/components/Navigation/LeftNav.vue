@@ -60,8 +60,11 @@
                 </a>
                 <div class="collapse" id="ui-basic2" style="" v-bind:class="{ show: 'adminAdd' === currentPage }">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"><a class="nav-link" href="../../pages/ui-features/buttons.html">List
-                            Admin</a></li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" :to="{name: 'Listadmin'}"
+                                         v-bind:class="{ active: 'Listadmin' === currentPage }">List Admin
+                            </router-link>
+                        </li>
                         <li class="nav-item">
                             <router-link class="nav-link" :to="{name: 'adminAdd'}"
                                          v-bind:class="{ active: 'adminAdd' === currentPage }">Add Admin
