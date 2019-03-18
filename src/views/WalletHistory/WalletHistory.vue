@@ -67,7 +67,7 @@
 
 <script>
     import Layout from '../../components/Layout';
-    import {paymentService} from "../../services/payments.service";
+    import {WalletHistoryService} from "../../services/Wallethistory.Service";
     import Datatable from '../../components/Datatable/Datatable';
     import Loader from '../../components/Loader/Loader'
 
@@ -80,14 +80,14 @@
             text: 'Confirm',
             title: "Confirm this transaction as successful",
             showKey: 'StatusInt',
-            showWhen: [2]
+            showWhen: [0, 1]
         },
-        {
-            class: 'btn btn-info',
-            callback: 'queryPayment',
-            args: ['Reference'],
-            text: 'Query',
-        }
+        // {
+        //     class: 'btn btn-info',
+        //     callback: 'queryPayment',
+        //     args: ['Reference'],
+        //     text: 'Query',
+        // }
     ];
 
     export default {
@@ -95,7 +95,7 @@
         data() {
             return {
                 title: "Payment",
-                columns: ['Reference', 'Amount', 'User', 'Subscription Plan', 'Status'],
+                columns: ['Reference', 'UnitWorth', 'AmountPaid' ,'Description', 'User', 'Type' ,'Created'],
                 perPage: 10,
                 sortable: false,
                 searchable: true,
@@ -110,60 +110,22 @@
             }
         },
         async created() {
-          await this.fetchPayments();  
-        },
-        methods: {
-            fetchPayments() {
-                this.paymentsData = [];
-
-                paymentService.listpayment().then((response) => {
-                response.forEach(({reference: ref, amount_paid: amount, paid_by: user, paid_for: sub, status_readable: status, status: statusInt}) => {
+            await WalletHistoryService.wallethistory().then((response) => {
+                response.forEach(({reference: ref, unit_worth:unit, amount_paid: amount, description: des, user:User, type: status, created_at: created}) => {
                     this.paymentsData.push({
                         Reference: ref,
-                        Amount: "&#8358;" + amount,
-                        User: user,
-                        'Subscription Plan': sub,
-                        Status: status,
-                        StatusInt: statusInt
+                        UnitWorth:unit,
+                        AmountPaid:amount,
+                        Type:status,
+                        Description:des,
+                        User: User,
+                        Created: created,
                     });
                 });
                 this.loading = false;
-            }).catch((err) => {});
-            },
-            confirmPayment(ref) {
-                this.loadingText = "Confirming payment...";
-                this.isLoading = true;
-                paymentService.comfirmPayment(ref).then((res)=>{
-                    this.isLoading = false;
-                    this.$toastr.success(res.message, {timeOut: 5000});
-                    this.loading = true;
-                    this.fetchPayments();
-                }).catch((err) => {
-                    this.isLoading = false;
-                    this.$toastr.error(err.message || "Payment comfirmation failed", "Error!", {timeOut: 5000});
-                });
-            },
-            deletePay() {
-                window.alert('deleted');
-            },
-            closeQueryPayment() {
-                this.$modal.hide('query-payment');
-            },
-            closeComfirmPayment() {
-                this.$modal.hide('comfirm-payment');
-            },
-            queryPayment(reference) {
-                this.loadingText = "Querying payment...";
-                this.isLoading = true;
-
-                paymentService.querypayment(reference).then((response) => {
-                    this.isLoading = false;
-                    this.queryData = response;
-                    this.$modal.show('query-payment');
-                }).catch((err) => this.$toastr.error(err.message || "Payment querying failed", "Error!", {timeOut: 5000}));
-
-            }
+            }).catch((err) => window.console.log(err));
         },
+        
         components: {
             Layout, Datatable, Loader
         }

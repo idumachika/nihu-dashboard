@@ -11,14 +11,14 @@ const ListUserservice = {
     },
     blockUser: async (userId) => {
         return await ApiService.post('/admin/user/'+userId+'/block').then((res) => {
-            return Promise.resolve(res.data.data);
+            return Promise.resolve(res.data);
         }).catch(() => {
             return Promise.reject(false);
         });
     },
-    UnblockUser: async (userId) => {
+    unblockUser: async (userId) => {
         return await ApiService.post('/admin/user/'+userId+'/unblock').then((res) => {
-            return Promise.resolve(res.data.data);
+            return Promise.resolve(res.data);
         }).catch(() => {
             return Promise.reject(false);
         });

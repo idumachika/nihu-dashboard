@@ -16,8 +16,8 @@ const paymentService = {
         });
     },
     comfirmPayment: async (ref) => {
-        return await ApiService.get("/payments/query?reference="+ref).then((res) => {
-            return Promise.resolve(res.data.data);
+        return await ApiService.put('/super/payments/update/'+ref, {status: 1}).then((res) => {
+            return Promise.resolve(res.data);
         }).catch(() => {
             return Promise.reject(false);
         });

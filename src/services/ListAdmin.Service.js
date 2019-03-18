@@ -10,8 +10,8 @@ const ListAdminservice = {
         });
     },
     upgradeAdmin: async (adminId) => {
-        return await ApiService.post('/super/account/upgrade/'+adminId).then((res) => {
-            return Promise.resolve(res.data.data);
+        return await ApiService.put('/super/account/upgrade/'+adminId).then((res) => {
+            return Promise.resolve(res.data);
         }).catch(() => {
             return Promise.reject(false);
         });

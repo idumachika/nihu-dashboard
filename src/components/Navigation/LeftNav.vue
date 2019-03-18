@@ -38,7 +38,7 @@
                 <div class="collapse" id="ui-basic" style="" v-bind:class="{ show: 'wallet' === currentPage }">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <router-link class="nav-link" :to="{name: 'wallet'}">
+                            <router-link class="nav-link" :to="{name: 'WalletHistory'}">
                                 View Wallet History
                             </router-link>
                         </li>

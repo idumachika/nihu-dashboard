@@ -87,8 +87,8 @@
                     password: this.password,
                     display_name: this.display_name,
 
-                }).then(function (response) {
-                    this.$toastr.response(response.message, "Account Creation was successfull!", {timeOut: 5000});
+                }).then((res)=> {
+                    this.$toastr.success(res.message, {timeOut: 5000});
 
                 }).catch((error) => {
                     this.$toastr.error(error.message, "Account Creation failed!", {timeOut: 5000});

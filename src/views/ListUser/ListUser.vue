@@ -18,7 +18,7 @@
                                 <h4 class="card-title"></h4>
                                 <!-- <Datatable :fields="fields" :data="paymentsData" :perPage="1"> -->
                                 <!-- </Datatable> -->
-                                <Datatable :columns="columns" :data="userData" :loading="loading" @BlockUser="BlockUser" :actions="actions"></Datatable>
+                                <Datatable :columns="columns" :data="userData" :loading="loading" @unBlockUser="unBlockUser" @BlockUser="BlockUser" :actions="actions"></Datatable>
                             </div>
                         </div>
                     </div>
@@ -44,12 +44,13 @@
             args: ['UserId'],
             text: 'Block'
         },
-        // {
-        //     class: 'btn btn-danger',
-        //     actionType: 'click',
-        //     callback: 'BlockUser',
-        //     text: 'Block User'
-        // }
+        {
+            class: 'btn btn-danger',
+            actionType: 'click',
+            args: ['UserId'],
+            callback: 'unBlockUser',
+            text: 'UnBlock User'
+        }
     ];
 
 
@@ -60,7 +61,7 @@
         data() {
             return {
                 title: "Listuser",
-                columns: ['UserId','Firstname', 'Lastname', 'Username', 'Email', 'PhoneNumber', 'FullName', 'Subscription Plan', 'Status'],
+                columns: ['UserId', 'Username', 'Email', 'FullName', 'Subscription Plan', 'Status'],
                 perPage: 10,
                 sortable: false,
                 searchable: true,
@@ -102,13 +103,26 @@
                 BlockUser(uuid){
                     this.loadingText = "Blocking User..."
                     this.isLoading = true;
-                    ListUserservice.blockUser(uuid).then((response) => {
+                    ListUserservice.blockUser(uuid).then((res) => {
                         this.isLoading= false;
-                        this.queryData = response;
-                     this.$toastr.response(response.message, "Wallet Topup Succesfull!", {timeOut: 5000});
+                    this.$toastr.success(res.message, {timeOut: 5000});
 
                         
-                    })
+                    }).catch((err) => this.$toastr.error(err.message || "Blocking failed", "Error!", {timeOut: 5000}));
+
+                    
+                },
+                unBlockUser(uuid){
+                    this.loadingText = "unBlocking User..."
+                    this.isLoading = true;
+                    ListUserservice.unblockUser(uuid).then((response) => {
+                        this.isLoading= false;
+                        this.queryData = response;
+                     this.$toastr.response(response.message, "UnBlocking Succesfull!", {timeOut: 5000});
+
+                        
+                    }).catch((err) => this.$toastr.error(err.message || "UnBlocking failed", "Error!", {timeOut: 5000}));
+
                     
                 }
             },

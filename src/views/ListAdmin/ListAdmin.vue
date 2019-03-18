@@ -41,7 +41,7 @@
             class: 'btn btn-primary',
             actionType: 'click',
             callback: 'UpgradeAdmin',
-            args: ['UserId'],
+            args: ['AdminId'],
             text: 'Upgrade Admin'
         },
         // {
@@ -89,25 +89,28 @@
             }).catch((err) => window.console.log(err));
         },
          methods: {
-                UpgradeAdmin(adminId) {
-                    window.console.log("AdminId: " + adminId);
+                test(adminId) {
+                    window.console.log("AdminId:" + adminId);
                 },
                 blockUser() {
                     window.alert('Blocked User');
                 },
                 
-                // UpgradeAdmin(uuid){
-                //     this.loadingText = "Upgradding Admin..."
-                //     this.isLoading = true;
-                //     ListAdminservice.upgradeAdmin(uuid).then((response) => {
-                //         this.isLoading= false;
-                //         this.adminData = response;
-                //      this.$toastr.response(response.message, "Upgrade Admin Successfull!", {timeOut: 5000});
+                UpgradeAdmin(adminId){
+                    this.loadingText = "Upgrading Admin..."
+                    this.isLoading = true;
+                    ListAdminservice.upgradeAdmin(adminId).then((res) => {
+                    this.isLoading= false;
+                    this.$toastr.success(res.message, {timeOut: 5000});
 
                         
-                //     })
-                    
-                // }
+                    }).catch((error) => {
+                    this.$toastr.error(error.message, "Admin account is already at highest level!", {timeOut: 5000});
+                    this.isLoading= false;
+
+                    });
+                            
+                    }
             },
         components: {Layout,Loader, Datatable}
     }

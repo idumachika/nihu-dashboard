@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="content-wrapper  align-items-center auth">
-        <Loader v-if="loading" :show-full="true" loading-text="Creating Wallet..."/>
+        <Loader v-if="loading" :show-full="true" loading-text="Crediting Wallet..."/>
             <div class="col-md-6 grid-margin stretch-card">
             <div class="card" @submit.prevent="post"> 
 
@@ -113,8 +113,10 @@
                     description: this.description,
                     unit_worth: this.unit_worth,
 
-                }).then(function (response) {
-                    this.$toastr.response(response.message, "Wallet Topup Succesfull!", {timeOut: 5000});
+                }).then((res)=>{
+                    this.$toastr.success(res.message, {timeOut: 5000});
+
+
 
                 }).catch((error) => {
                     this.$toastr.error(error.message, "Wallet Topup failed!", {timeOut: 5000});
@@ -127,3 +129,4 @@
             
     }
 </script>
+

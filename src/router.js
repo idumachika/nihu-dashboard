@@ -8,6 +8,7 @@ import Creditwallet from './views/CreditWallet/CreditWallet.vue'
 import AdminAccount from './views/AdminAccount/AdminAccount.vue'
 import ListUser from './views/ListUser/ListUser.vue'
 import ListAdmin from './views/ListAdmin/ListAdmin.vue'
+import WalletHistory from './views/WalletHistory/WalletHistory.vue'
 
 
 
@@ -62,6 +63,11 @@ const router = new Router({
             path: '/list/admin',
             name: 'Listadmin',
             component: ListAdmin,
+        },
+        {
+            path: '/wallet/history',
+            name: 'WalletHistory',
+            component: WalletHistory,
         },
     ]
 });
