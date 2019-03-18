@@ -135,7 +135,7 @@
             },
             itemValue(item, column) {
                 return item[column]
-            },
+            }
         },
         computed: {
             sortedActivity: function () {
@@ -153,12 +153,15 @@
             },
             filteredList() {
                 return this.data.filter((val) => {
+                    if (this.search.length === 0) return true;
+
                     var match = false;
                     let keys = Object.keys(val);
                     for (var i = 0; i < keys.length; i++) {
-                        match = val[keys[i]].toLowerCase().match(this.search.toLowerCase());
-                        if (match)
-                            break;
+                        var current = val[keys[i]] || '';
+                        match = current.toString().toUpperCase().match(this.search.toString().toUpperCase());
+                        // match = new RegExp(val[keys[i]], 'gi').test(this.search);
+                        if (match) break;
                     }
                     return match;
                 }).filter((row, index) => {
