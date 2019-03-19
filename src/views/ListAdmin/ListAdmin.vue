@@ -60,7 +60,7 @@
         data() {
             return {
                 title: "Listuser",
-                columns: ['AdminId', 'Username', 'Email', 'LastLogin', 'Level', 'Status'],
+                columns: ['AdminId', 'Username', 'Email', 'Last Login', 'Level', 'Status'],
                 perPage: 10,
                 sortable: false,
                 searchable: true,
@@ -78,7 +78,7 @@
                     this.adminData.push({
                         Username: user,
                         Email: mail,
-                        LastLogin:login,
+                        'Last Login':login,
                         Level:AdminLevel,
                         Status: status_readable,
                         AdminId: adminId

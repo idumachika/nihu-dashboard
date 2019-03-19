@@ -95,7 +95,7 @@
         data() {
             return {
                 title: "Payment",
-                columns: ['Reference', 'UnitWorth', 'AmountPaid' ,'Description', 'User', 'Type' ,'Created'],
+                columns: ['Reference', 'Unit Worth', 'Amount Paid' ,'Description', 'User', 'Type' ,'Created'],
                 perPage: 10,
                 sortable: false,
                 searchable: true,
@@ -114,8 +114,8 @@
                 response.forEach(({reference: ref, unit_worth:unit, amount_paid: amount, description: des, user:User, type: status, created_at: created}) => {
                     this.paymentsData.push({
                         Reference: ref,
-                        UnitWorth:unit,
-                        AmountPaid:amount,
+                        'Unit Worth':unit,
+                        'Amount Paid':amount,
                         Type:status,
                         Description:des,
                         User: User,

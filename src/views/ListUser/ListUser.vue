@@ -38,18 +38,18 @@
 
     const action = [
         {
-            class: 'btn btn-primary',
+            class: 'btn btn-danger',
             actionType: 'click',
             callback: 'BlockUser',
             args: ['UserId'],
             text: 'Block'
         },
         {
-            class: 'btn btn-danger',
+            class: 'btn btn-primary',
             actionType: 'click',
             args: ['UserId'],
             callback: 'unBlockUser',
-            text: 'UnBlock User'
+            text: 'Unblock'
         }
     ];
 
