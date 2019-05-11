@@ -7,7 +7,7 @@
                     <h3 class="page-title">
                         <span class="page-title-icon bg-gradient-primary text-white mr-2"> <i
                                 class="mdi mdi-account-card-details"></i></span>
-                        Add Admin
+                        Add Music
                     </h3>
                 </div>
             </div>
@@ -20,31 +20,35 @@
                         <div class="auth-form-light text-left p-5">
                             <div class="brand-logo">
                             </div>
-                            <h4>Hello Super Admin! Add admin </h4>
+                            <h4>Hello  Admin! Add Music </h4>
                             <!-- <h6 class="font-weight-light">Sign in to continue.</h6> -->
                             <form class="pt-3" @submit.prevent="post">
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
-                                           placeholder="Username"  v-model="username" required>
+                                           placeholder="Music Name"  v-model="name" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-lg"
-                                           id="exampleInputPassword1" placeholder="idumachika@gmail.com" v-model="email"
+                                    <input type="textarea" class="form-control form-control-lg"
+                                           id="exampleInputPassword1" placeholder="Write Here..." v-model="description"
                                            required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control form-control-lg"
-                                           id="exampleInputPassword1" placeholder="password" v-model="password"
+                                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
+                                           placeholder="Category"  v-model="category_id" required>
+                                </div>
+                                <div class="form-group">
+                                    <input  class="form-control form-control-lg"
+                                           id="exampleInputPassword1" type="file" accept="image/*"  @change="onImageChanged"
                                            required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-lg"
-                                           id="exampleInputPassword1" placeholder="steve" v-model="display_name"
+                                    <input type="file" class="form-control form-control-lg"
+                                           id="exampleInputPassword1"  accept="image/*"  @change="onFileChanged"
                                            required>
                                 </div>
                                 <div class="mt-3">
                                     <button class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn"
-                                            href="">Add Admin
+                                            href="">Add Music
                                     </button>
                                 </div>
                             </form>
@@ -65,7 +69,7 @@
 <script>
     import Loader from "../../components/Loader/Loader";
     import Layout from '../../components/Layout';
-    import {AddAdminService} from "../../services/AddAdmin.Service";
+    import {AddMusicService} from "../../services/AddMusic.Service";
 
 
     
@@ -74,24 +78,36 @@
         name: 'admin',
         components: {Loader, Layout},
         data: function () {
-            return {    username: '', email: '', password: '', display_name: '',loading: false}
+            return {    
+                name: '',
+                description: '',
+                image: '', 
+                file: '', 
+                category_id:'',
+                loading: false}
         },
         
         methods: {
             // ...mapActions({loginUser: 'LOGIN'}),
+            onImageChanged (event) {
+                    this.image = event.target.files[0]
+            },
+            onFileChanged (event) {
+                    this.file = event.target.files[0]
+            },
             async post() {
-                this.loading = true;
-                await AddAdminService.addadmin({
-                    username: this.username,
-                    email: this.email,
-                    password: this.password,
-                    display_name: this.display_name,
-
-                }).then((res)=> {
+               this.loading = true;
+                let bodyFormData = new FormData()
+                bodyFormData.set('name', this.name);
+                bodyFormData.set('description', this.description);
+                bodyFormData.set('image', this.image);
+                bodyFormData.set('file', this.file);
+                bodyFormData.set('category_id', this.category_id);
+                await AddMusicService.addmusic(bodyFormData).then((res)=> {
                     this.$toastr.success(res.message, {timeOut: 5000});
 
                 }).catch((error) => {
-                    this.$toastr.error(error.message, "Account Creation failed!", {timeOut: 5000});
+                    this.$toastr.error(error.message, "Music  Creation failed!", {timeOut: 5000});
                 });
                 this.loading = false;
             }

@@ -7,35 +7,32 @@
                     <h3 class="page-title">
                         <span class="page-title-icon bg-gradient-primary text-white mr-2"> <i
                                 class="mdi mdi-cash-multiple"></i></span>
-                        Credit Wallet
+                       Add Category
                     </h3>
                 </div>
             </div>
             <div class="content-wrapper  align-items-center auth">
-        <Loader v-if="loading" :show-full="true" loading-text="Crediting Wallet..."/>
+        <Loader v-if="loading" :show-full="true" loading-text="Adding Category..."/>
             <div class="col-md-6 grid-margin stretch-card">
             <div class="card" @submit.prevent="post"> 
 
                 <div class="card-body">
                 <form class="forms-sample">
                     <div class="form-group">
-                      <label for="exampleInputUsername1">Username</label>
-                      <input type="text" class="form-control" id="exampleInputUsername1" v-model="user"  placeholder="idumachika@gmail.com">
+                      <label for="exampleInputUsername1">Music Name</label>
+                      <input type="text" class="form-control" id="exampleInputUsername1" v-model="name"  placeholder="Music Name">
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Amount Paid</label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" v-model="amount_paid" placeholder="Amount paid eg 40000">
+                      <label for="exampleInputEmail1">Description</label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" v-model="description" placeholder="Write Here">
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputPassword1">Bonus Top up</label>
-                      <input type="text" class="form-control" id="exampleInputPassword1"  v-model="description" placeholder="Bonus top up">
+                      <label for="exampleInputPassword1">Upload Image </label>
+                      <input type="file" class="form-control" id="exampleInputPassword1" @change="onFileChanged">
                     </div>
-                    <div class="form-group">
-                      <label for="exampleInputConfirmPassword1">Unit Worth</label>
-                      <input type="text" class="form-control" id="exampleInputConfirmPassword1" v-model="unit_worth" placeholder="Unit worth eg 50000">
-                    </div>
+                  
                     
-                    <button type="submit" class="btn btn-gradient-primary mr-2">Top Up Wallet</button>
+                    <button type="submit" class="btn btn-gradient-primary mr-2">Add Category</button>
                   </form>
                 </div>
               </div>
@@ -91,7 +88,7 @@
 <script>
     import Loader from "../../components/Loader/Loader";
     import Layout from '../../components/Layout';
-    import {WalletService} from "../../services/wallet.service";
+    import {AddTvShowCategoryService} from "../../services/AddTvShowCategory.Service";
 
 
     
@@ -100,26 +97,33 @@
         name: 'credit',
         components: {Loader, Layout},
         data: function () {
-            return {    user: '', amount_paid: '', description: '', unit_worth: '',loading: false}
+            return {    
+                name: '',
+                description: '',
+                image: '',
+                loading: false
+                }
         },
         
         methods: {
             // ...mapActions({loginUser: 'LOGIN'}),
+            onFileChanged (event) {
+                    this.file = event.target.files[0]
+            },
             async post() {
                 this.loading = true;
-                await WalletService.creditWallet({
-                    user: this.user,
-                    amount_paid: this.amount_paid,
-                    description: this.description,
-                    unit_worth: this.unit_worth,
-
-                }).then((res)=>{
+                let bodyFormData = new FormData()
+                bodyFormData.set('name', this.name);
+                bodyFormData.set('description', this.description);
+                bodyFormData.set('image', this.image);
+                
+                await AddTvShowCategoryService.addtvshowcategory(bodyFormData).then((res)=>{
                     this.$toastr.success(res.message, {timeOut: 5000});
 
 
 
                 }).catch((error) => {
-                    this.$toastr.error(error.message, "Wallet Topup failed!", {timeOut: 5000});
+                    this.$toastr.error(error.message, "Tv Show Failed!", {timeOut: 5000});
                 });
                 this.loading = false;
 

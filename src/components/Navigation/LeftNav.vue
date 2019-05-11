@@ -8,7 +8,7 @@
                         <span class="login-status online"></span> <!--change to offline or busy as needed-->
                     </div>
                     <div class="nav-profile-text d-flex flex-column">
-                        <span class="font-weight-bold mb-2">{{user.display_name}}</span>
+                        <span class="font-weight-bold mb-2">{{user.name}}</span>
                         <span class="text-secondary text-small">Admin</span>
 
                     </div>
@@ -21,31 +21,80 @@
                     <i class="mdi mdi-home menu-icon"></i>
                 </router-link>
             </li>
-            <li class="nav-item" v-bind:class="{ active: 'payments' === currentPage }">
-                <router-link class="nav-link" :to="{name: 'payments'}">
-                    <span class="menu-title">Payments</span>
-                    <i class="mdi mdi mdi-cash-multiple menu-icon"></i>
-                </router-link>
-            </li>
-
-            <li class="nav-item" v-bind:class="{ active: 'creditWallet' === currentPage }">
+            <li class="nav-item" v-bind:class="{ active: 'AddMusic' === currentPage }">
                 <a class="nav-link collapsed" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
                    aria-controls="ui-basic">
-                    <span class="menu-title">Wallet</span>
+                    <span class="menu-title">Entertainment </span>
                     <i class="menu-arrow"></i>
                     <i class="mdi mdi-google-wallet menu-icon"></i>
                 </a>
-                <div class="collapse" id="ui-basic" style="" v-bind:class="{ show: 'wallet' === currentPage }">
+                <div class="collapse" id="ui-basic" style="" v-bind:class="{ show: 'AddMusic' === currentPage }">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <router-link class="nav-link" :to="{name: 'WalletHistory'}">
-                                View Wallet History
+                            <router-link class="nav-link" :to="{name: 'AddMusic'}">
+                                Add Music
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link class="nav-link" :to="{name: 'creditWallet'}"
-                                         v-bind:class="{ active: 'creditWallet' === currentPage }">
-                                Credit Wallet
+                            <router-link class="nav-link" :to="{name: 'ListMusic'}"
+                                         v-bind:class="{ active: 'ListMusic' === currentPage }">
+                                Music List
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" :to="{name: 'AddMusicCategory'}"
+                                         v-bind:class="{ active: 'AddMusicCategory' === currentPage }">
+                                Add Category
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" :to="{name: 'ListCategory'}"
+                                         v-bind:class="{ active: 'ListCategory' === currentPage }">
+                                 Category List
+                            </router-link>
+                        </li>
+                    </ul>
+                </div>
+                 <!-- <router-link class="nav-link" :to="{name: 'payments'}">
+                    <span class="menu-title">Payments</span>
+                    <i class="mdi mdi mdi-cash-multiple menu-icon"></i>
+                </router-link>
+                <router-link class="nav-link" :to="{name: 'payments'}">
+                    <span class="menu-title">Payments</span>
+                    <i class="mdi mdi mdi-cash-multiple menu-icon"></i>
+                </router-link> -->
+            </li>
+
+            <li class="nav-item" v-bind:class="{ active: 'AddTvShow' === currentPage }">
+                <a class="nav-link collapsed" data-toggle="collapse" href="#ui-basic1" aria-expanded="false"
+                   aria-controls="ui-basic1">
+                    <span class="menu-title">Recaps</span>
+                    <i class="menu-arrow"></i>
+                    <i class="mdi mdi-google-wallet menu-icon"></i>
+                </a>
+                <div class="collapse" id="ui-basic1" style="" v-bind:class="{ show: 'AddTvShow' === currentPage }">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <router-link class="nav-link" :to="{name: 'AddTvShow'}">
+                            Add TV Show
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" :to="{name: 'ListTvShow'}"
+                                         v-bind:class="{ active: 'ListTvShow' === currentPage }">
+                            Tv Show List
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" :to="{name: 'AddTvShowCategory'}"
+                                         v-bind:class="{ active: 'AddTvShowCategory' === currentPage }">
+                               Add Tv Show Category
+                            </router-link>
+                        </li>
+                         <li class="nav-item">
+                            <router-link class="nav-link" :to="{name: 'ListTvShowCategory'}"
+                                         v-bind:class="{ active: 'ListTvShowCategory' === currentPage }">
+                               Tv Show Category
                             </router-link>
                         </li>
                     </ul>
@@ -54,7 +103,7 @@
             <li class="nav-item" v-bind:class="{ active: 'adminAdd' === currentPage }">
                 <a class="nav-link collapsed" data-toggle="collapse" href="#ui-basic2" aria-expanded="false"
                    aria-controls="ui-basic">
-                    <span class="menu-title">Admin</span>
+                    <span class="menu-title">Past, Present, Future</span>
                     <i class="menu-arrow"></i>
                     <i class="mdi mdi-account-key menu-icon"></i>
                 </a>
@@ -62,35 +111,51 @@
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
                             <router-link class="nav-link" :to="{name: 'Listadmin'}"
-                                         v-bind:class="{ active: 'Listadmin' === currentPage }">List Admin
+                                         v-bind:class="{ active: 'Listadmin' === currentPage }">Add View
                             </router-link>
                         </li>
                         <li class="nav-item">
                             <router-link class="nav-link" :to="{name: 'adminAdd'}"
-                                         v-bind:class="{ active: 'adminAdd' === currentPage }">Add Admin
+                                         v-bind:class="{ active: 'adminAdd' === currentPage }">List View 
                             </router-link>
                         </li>
                     </ul>
                 </div>
             </li>
-            <li class="nav-item" v-bind:class="{ active: 'Listuser' === currentPage }">
+            <li class="nav-item" v-bind:class="{ active: 'AddOriginalCategory' === currentPage }">
                 <a class="nav-link collapsed" data-toggle="collapse" href="#ui-basic3" aria-expanded="false"
                    aria-controls="ui-basic">
-                    <span class="menu-title">User</span>
+                    <span class="menu-title">Nihu TV</span>
                     <i class="menu-arrow"></i>
                     <i class="mdi mdi-account-key menu-icon"></i>
                 </a>
-                <div class="collapse" id="ui-basic3" style="" v-bind:class="{ show: 'Listuser' === currentPage }">
+                 <div class="collapse" id="ui-basic3" style="" v-bind:class="{ show: 'AddOriginal' === currentPage }">
                     <ul class="nav flex-column sub-menu">
                         <!-- <li class="nav-item"><a class="nav-link" href="../../pages/ui-features/buttons.html">Block
                             User</a></li> -->
                         <li class="nav-item">
-                            <router-link class="nav-link" :to="{name: 'Listuser'}"
-                                         v-bind:class="{ active: 'Listuser' === currentPage }">List User
+                            <router-link class="nav-link" :to="{name: 'AddOriginal'}"
+                                         v-bind:class="{ active: 'AddOriginal' === currentPage }">Add Nihu TV
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" :to="{name: 'AddOriginalCategory'}"
+                                         v-bind:class="{ active: 'AddOriginalCategory' === currentPage }">Add Nihu TV Category
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" :to="{name: 'ListOriginalCategory'}"
+                                         v-bind:class="{ active: 'ListOriginalCategory' === currentPage }">List Nihu TV Category
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" :to="{name: 'ListOriginal'}"
+                                         v-bind:class="{ active: 'ListOriginal' === currentPage }"> List Nihu TV
                             </router-link>
                         </li>
                     </ul>
                 </div>
+               
             </li>
         </ul>
     </nav>

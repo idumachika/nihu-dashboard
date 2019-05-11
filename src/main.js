@@ -12,7 +12,7 @@ window.toastr = require('toastr');
 
 
 // Set the base URL of the API
-ApiService.init('http://jive-core.herokuapp.com/api/v1');
+ApiService.init('https://nihu.herokuapp.com/api/v1');
 
 if (store.dispatch('isLoggedIn'))
     ApiService.setHeader(store.getters.GET_AUTH_TOKEN);

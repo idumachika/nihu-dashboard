@@ -1,20 +1,19 @@
 <template>
     <Layout>
         <div slot="head">
-            <modal name="query-payment" :height="390">
+            <modal name="view_original" :height="390">
                 <div class="modal-header">
-                    Payment details for {{queryData.reference}}
+                   
                 </div>
                 <div class="modaly">
-                    <p>Customer name: {{queryData.customer_name}}</p>
-                    <p>Customer email: {{queryData.customer_email}}</p>
-                    <p>Amount: {{queryData.amount}}</p>
-                    <p>Payment type: {{queryData.payment_type}}</p>
-                    <p>Gateway response: {{queryData.gateway_response}}</p>
-                    <p v-if="queryData.card">Card Type: {{queryData.card.type}}</p>
+                    <img alt="" :src="OriginalCategory.image"><img/>
+                    <p>Category Name: {{OriginalCategory.name}}</p>
+                    <p>Customer Description: {{OriginalCategory.description}}</p>
+                    <p>Date: {{OriginalCategory.created_at}}</p>
+                   
                 </div>
                 <div class="modal-footer">
-                    <button @click="closeQueryPayment" class="btn btn-primary mx-auto">Close</button>
+                    <button @click="closeOriginalCategory" class="btn btn-primary mx-auto">Close</button>
                 </div>
             </modal>
         </div>
@@ -44,7 +43,7 @@
                     <h3 class="page-title">
                             <span class="page-title-icon bg-gradient-primary text-white mr-2"> <i
                                     class="mdi mdi-cash-multiple"></i></span>
-                        Payments
+                        Original  Category
                     </h3>
                 </div>
                 <div class="row">
@@ -52,8 +51,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title"></h4>
-                                <Datatable :columns="columns" :data="paymentsData" @confirmPayment="confirmPayment"
-                                           @queryPayment="queryPayment"
+                                <Datatable :columns="columns" :data="paymentsData" @editOriginal="editOriginal" @deleteOriginal="deleteOriginal"
+                                           @viewOriginal="viewOriginal"
                                            :loading="loading" :actions="actions">
                                 </Datatable>
                             </div>
@@ -67,7 +66,7 @@
 
 <script>
     import Layout from '../../components/Layout';
-    import {paymentService} from "../../services/payments.service";
+    import {ListOriginalCategoryService} from "../../services/ListOriginalCategory.Service";
     import Datatable from '../../components/Datatable/Datatable';
     import Loader from '../../components/Loader/Loader'
 
@@ -75,19 +74,24 @@
     const action = [
         {
             class: 'btn btn-primary',
-            callback: 'confirmPayment',
-            args: ['Reference'],
-            text: 'Confirm',
-            title: "Confirm this transaction as successful",
-            showKey: 'StatusInt',
-            showWhen: [2]
+            callback: 'editOriginal',
+            args: ['AdminId'],
+            text: 'Edit',
+           
         },
         {
-            class: 'btn btn-info',
-            callback: 'queryPayment',
-            args: ['Reference'],
-            text: 'Query',
-        }
+            class: 'btn btn-danger',
+            callback: 'deleteOriginal',
+            args: ['AdminId'],
+            text: 'Delete',
+        },
+        {
+            class: 'btn btn-primary',
+            callback: 'viewOriginal',
+            args: ['AdminId'],
+            text: 'View',
+           
+        },
     ];
 
     export default {
@@ -95,7 +99,7 @@
         data() {
             return {
                 title: "Payment",
-                columns: ['Reference', 'Amount', 'User', 'Subscription Plan', 'Status'],
+                columns: ["Cover", 'Name','Description', 'Music', 'Status'],
                 perPage: 10,
                 sortable: false,
                 searchable: true,
@@ -105,7 +109,7 @@
                 callbacks: ['test', 'delete '],
                 isLoading: false,
                 loadingText: "loading...",
-                queryData: {},
+                OriginalCategory: {},
                 confirmData:{}
             }
         },
@@ -116,51 +120,60 @@
             fetchPayments() {
                 this.paymentsData = [];
 
-                paymentService.listpayment().then((response) => {
-                response.forEach(({reference: ref, amount_paid: amount, paid_by: user, paid_for: sub, status_readable: status, status: statusInt}) => {
+                ListOriginalCategoryService.listcategory().then((response) => {
+                response.forEach(({image:cover, name:music_name, description:des, music:sound, status: status_readable,uuid: adminId}) => {
                     this.paymentsData.push({
-                        Reference: ref,
-                        Amount: "&#8358;" + amount,
-                        User: user,
-                        'Subscription Plan': sub,
-                        Status: status,
-                        StatusInt: statusInt
+                        Cover: '<img src="https://progiving-api.herokuapp.com/church_logo/' +cover +'">',
+                        Name: music_name,
+                        Description:des,
+                        Status: status_readable,
+                        Music:sound,
+                        AdminId: adminId
                     });
                 });
                 this.loading = false;
-            }).catch((err) => {});
+            }).catch((err) => {
+                this.isLoading = false;
+                this.$toastr.error(err.message || "Loading List Failed", "Error!", {timeOut: 5000});
+            });
             },
-            confirmPayment(ref) {
-                this.loadingText = "Confirming payment...";
-                this.isLoading = true;
-                paymentService.comfirmPayment(ref).then((res)=>{
-                    this.isLoading = false;
-                    this.$toastr.success(res.message, {timeOut: 5000});
-                    this.loading = true;
-                    this.fetchPayments();
-                }).catch((err) => {
-                    this.isLoading = false;
-                    this.$toastr.error(err.message || "Payment comfirmation failed", "Error!", {timeOut: 5000});
-                });
-            },
+            
             deletePay() {
                 window.alert('deleted');
             },
-            closeQueryPayment() {
-                this.$modal.hide('query-payment');
+            closeOriginalCategory() {
+                this.$modal.hide('view_original');
             },
-            closeComfirmPayment() {
-                this.$modal.hide('comfirm-payment');
-            },
-            queryPayment(reference) {
-                this.loadingText = "Querying payment...";
+            
+            deleteOriginal(adminId) {
+                this.loadingText = "Please wait...";
                 this.isLoading = true;
-
-                paymentService.querypayment(reference).then((response) => {
-                    this.isLoading = false;
-                    this.queryData = response;
-                    this.$modal.show('query-payment');
+                ListOriginalCategoryService.deleteOriginal(adminId).then((response) => {
+                this.isLoading = false;
+                this.$toastr.success(response.message || "Payment querying failed", "Error!", {timeOut: 5000})
                 }).catch((err) => this.$toastr.error(err.message || "Payment querying failed", "Error!", {timeOut: 5000}));
+
+            },
+            editOriginal(adminId) {
+                this.loadingText = "Please wait...";
+                this.isLoading = true;
+                ListOriginalCategoryService.editOriginalCategory(adminId).then((response) => {
+                    this.isLoading = false;
+                    this.$modal.show('edit_original');
+                    this.$toastr.success(response.message || "Payment querying failed", "Error!", {timeOut: 5000})
+
+                }).catch((err) => this.$toastr.error(err.message || "Payment querying failed", "Error!", {timeOut: 5000}));
+
+            },
+            viewOriginal(adminId) {
+                this.loadingText = "Please wait...";
+                this.isLoading = true;
+            ListOriginalCategoryService.viewOriginalCategory(adminId).then((response) => {
+                    this.isLoading = false;
+                    this.OriginalCategory = response.message;
+                    this.$modal.show('view_original');
+                    this.$toastr.success(response.message || "Payment querying failed", "Error!", {timeOut: 5000})
+            }).catch((err) => this.$toastr.error(err.message || "Payment querying failed", "Error!", {timeOut: 5000}));
 
             }
         },

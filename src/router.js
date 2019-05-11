@@ -1,14 +1,20 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Login from './views/Login/Login.vue'
-import Store from './store/store'
+import Vue from 'vue';
+import Router from 'vue-router';
+import Login from './views/Login/Login.vue';
+import Store from './store/store';
 import Dashboard from './views/Dashboard/Dashboard.vue';
-import PaymentList from './views/Payment/Payment.vue'
-import Creditwallet from './views/CreditWallet/CreditWallet.vue'
-import AdminAccount from './views/AdminAccount/AdminAccount.vue'
-import ListUser from './views/ListUser/ListUser.vue'
-import ListAdmin from './views/ListAdmin/ListAdmin.vue'
-import WalletHistory from './views/WalletHistory/WalletHistory.vue'
+import AddMusicCategory from './views/AddMusicCategory/AddMusicCategory.vue'
+import AddMusic from './views/AddMusic/AddMusic.vue'
+import AddTvShow from './views/AddTvShow/AddTvShow.vue';
+import AddTvShowCategory from './views/AddTvShowCategory/AddTvShowCategory.vue';
+import ListTvShow from './views/ListTvShow/ListTvShow.vue';
+import ListTvShowCategory from './views/ListTvShowCategory/ListTvShowCategory.vue';
+import ListCategory from './views/ListCategory/ListCategory.vue';
+import ListMusic from './views/ListMusic/ListMusic.vue';
+import AddOriginal from './views/AddOriginal/AddOriginal.vue';
+import AddOriginalCategory from './views/AddOriginalCategory/AddOriginalCategory.vue';
+import ListOriginal  from './views/ListOriginal/ListOriginal.vue';
+import ListOriginalCategory from './views/ListOriginalCategory/ListOriginalCategory.vue'
 
 
 
@@ -16,6 +22,8 @@ Vue.use(Router);
 
 const router = new Router({
     mode: 'history',
+    base: process.env.NODE_ENV === 'production' ? '/nihu-music' : '/',
+
     routes: [
         {
             path: '/',
@@ -40,34 +48,65 @@ const router = new Router({
             name: 'logout',
         },
         {
-            path: '/payments',
-            name: 'payments',
-            component: PaymentList,
+            path: '/add_tv_show',
+            name: 'AddTvShow',
+            component: AddTvShow,
         },
         {
-            path: '/credits',
-            name: 'creditWallet',
-            component: Creditwallet,
+            path: '/add_music_category',
+            name: 'AddMusicCategory',
+            component: AddMusicCategory,
         },
         {
-            path: '/admin/add',
-            name: 'adminAdd',
-            component: AdminAccount,
+            path: '/add/music',
+            name: 'AddMusic',
+            component: AddMusic,
         },
         {
-            path: '/list/user',
-            name: 'Listuser',
-            component: ListUser,
+            path: '/list/category',
+            name: 'ListCategory',
+            component: ListCategory,
         },
         {
-            path: '/list/admin',
-            name: 'Listadmin',
-            component: ListAdmin,
+            path: '/list/music',
+            name: 'ListMusic',
+            component: ListMusic,
         },
         {
-            path: '/wallet/history',
-            name: 'WalletHistory',
-            component: WalletHistory,
+            path: '/tv_show/category',
+            name: 'AddTvShowCategory',
+            component: AddTvShowCategory,
+        },
+
+        {
+            path: '/list/tv_show',
+            name: 'ListTvShow',
+            component: ListTvShow,
+        },
+        {
+            path: '/list/tv_show_category',
+            name: 'ListTvShowCategory',
+            component: ListTvShowCategory,
+        },
+        {
+            path: '/add/original',
+            name: 'AddOriginal',
+            component: AddOriginal,
+        },
+        {
+            path: '/add/original_categroy',
+            name: 'AddOriginalCategory',
+            component: AddOriginalCategory,
+        },
+        {
+            path: '/list/list_original',
+            name: 'ListOriginal',
+            component: ListOriginal,
+        },
+        {
+            path: '/list/list_original_categroy',
+            name: 'ListOriginalCategory',
+            component: ListOriginalCategory,
         },
     ]
 });

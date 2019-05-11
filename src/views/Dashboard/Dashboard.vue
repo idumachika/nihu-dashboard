@@ -17,7 +17,7 @@
                             <div class="card-body">
                                 <img src="../../assets/images/circle.svg" class="card-img-absolute"
                                      alt="circle-image"/>
-                                <h4 class="font-weight-normal mb-3">Total Events
+                                <h4 class="font-weight-normal mb-3">Total Shows
                                     <i class="mdi mdi-chart-line mdi-18px float-right"></i>
                                 </h4>
                                 <h2 class="mb-5">{{dashboardData.total_events || 0}}</h2>
@@ -29,7 +29,7 @@
                             <div class="card-body">
                                 <img src="../../assets/images/circle.svg" class="card-img-absolute"
                                      alt="circle-image"/>
-                                <h4 class="font-weight-normal mb-3">Total Links Verified
+                                <h4 class="font-weight-normal mb-3">Total SpotLight
                                     <i class="mdi mdi-bookmark-outline mdi-18px float-right"></i>
                                 </h4>
                                 <h2 class="mb-5">{{dashboardData.total_verifications || 0}}</h2>
@@ -42,7 +42,7 @@
                             <div class="card-body">
                                 <img src="../../assets/images/circle.svg" class="card-img-absolute"
                                      alt="circle-image"/>
-                                <h4 class="font-weight-normal mb-3">Successful Transactions
+                                <h4 class="font-weight-normal mb-3">New Release
                                     <i class="mdi mdi-diamond mdi-24px float-right"></i>
                                 </h4>
                                 <h2 class="mb-5">{{dashboardData.total_successful_transactions || 0}}</h2>
@@ -55,7 +55,7 @@
                             <div class="card-body">
                                 <img src="../../assets/images/circle.svg" class="card-img-absolute"
                                      alt="circle-image"/>
-                                <h4 class="font-weight-normal mb-3">Failed Transactions
+                                <h4 class="font-weight-normal mb-3">Total Trends
                                     <i class="mdi mdi-diamond mdi-18px float-right"></i>
                                 </h4>
                                 <h2 class="mb-5">{{dashboardData.total_failed_transactions || 0}}</h2>

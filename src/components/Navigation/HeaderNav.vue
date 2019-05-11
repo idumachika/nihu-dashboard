@@ -2,7 +2,7 @@
     <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
             <router-link class="navbar-brand brand-logo" to="dashboard">
-                <img src="../../assets/jive.svg" alt="logo">
+                <img src="../../assets/images/nihu-logo1.svg" alt="logo">
             </router-link>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -22,7 +22,7 @@
                     <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown"
                        aria-expanded="false">
                         <div class="nav-profile-text">
-                            <p class="mb-1 text-black">{{user.display_name}}</p>
+                            <p class="mb-1 text-black">{{user.name}}</p>
                         </div>
                     </a>
                     <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
@@ -32,7 +32,7 @@
                         </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">
-                            <i class="mdi mdi-logout mr-2 text-primary"></i>
+                            <i class="mdi mdi-logout mr-2 "></i>
                             Signout
                         </a>
                     </div>

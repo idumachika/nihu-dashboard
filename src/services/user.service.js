@@ -1,13 +1,13 @@
 import {ApiService} from "./api.service";
 
 const userService = {
-    login: ({username, password}) => {
+    login: ({email, password}) => {
         return new Promise(function (resolve, reject) {
-            ApiService.post('/admin/authenticate', {username: username, password: password}).then(async (res) => {
+            ApiService.post('/admin/login', {email: email, password: password}).then(async (res) => {
                 let token = res.data.data.token;
                 resolve(token);
             }).catch((error) => {
-                reject(error.response.data);
+                reject(error);
             });
         });
     },
