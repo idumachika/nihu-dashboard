@@ -22,7 +22,7 @@ Vue.use(Router);
 
 const router = new Router({
     mode: 'history',
-    base: process.env.NODE_ENV === 'production' ? '/nihu-music' : '/',
+    // base: process.env.NODE_ENV === 'production' ? '/nihu-music' : '/',
 
     routes: [
         {
