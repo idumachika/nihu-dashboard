@@ -7,7 +7,7 @@ const userService = {
                 let token = res.data.data.token;
                 resolve(token);
             }).catch((error) => {
-                reject(error);
+                reject(error.response.data);
             });
         });
     },
@@ -18,8 +18,8 @@ const userService = {
             url: ApiService.getBaseUrl() + "/admin/authorize"
         }).then((res) => {
             return Promise.resolve(res.data.data);
-        }).catch(() => {
-            return Promise.reject(false);
+        }).catch((error) => {
+            return Promise.reject(error.response.data);
         });
     }
 };

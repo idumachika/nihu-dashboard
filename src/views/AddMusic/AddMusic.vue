@@ -37,14 +37,33 @@
                                            placeholder="Category"  v-model="category_id" required>
                                 </div>
                                 <div class="form-group">
-                                    <input  class="form-control form-control-lg"
-                                           id="exampleInputPassword1" type="file" accept="image/*"  @change="onImageChanged"
-                                           required>
+                                            <label>Image upload</label>
+                                            <input type="file" name="img[]" @change="onImageChanged"
+                                                   class="file-upload-default" ref="image">
+                                        <div class="input-group col-xs-12">
+                                                <input type="text" v-model='imageName' accept="image/*"
+                                                       class="form-control file-upload-info" disabled=""
+                                                       placeholder="Upload Image">
+                                                <span class="input-group-append">
+                                                <button class="file-upload-browse btn btn-gradient-primary"
+                                                @click="$refs.image.click()" type="button">Upload</button>
+                                                </span>
+                                        </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="file" class="form-control form-control-lg"
-                                           id="exampleInputPassword1"  accept="image/*"  @change="onFileChanged"
-                                           required>
+                                            <label>Audio/Video upload</label>
+                                            <input type="file" name="img[]" @change="onFileChanged"
+                                                   class="file-upload-default" ref="file">
+                                        <div class="input-group col-xs-12">
+                                                <input type="text" v-model='fileName' accept="video/*,image/*"
+                                                    class="form-control file-upload-info" disabled=""
+                                                    placeholder="Upload Image">
+                                            <span class="input-group-append">
+                                                    <button class="file-upload-browse btn btn-gradient-primary" type="button"
+                                                    @click="$refs.file.click()">Upload
+                                                    </button>
+                                            </span>
+                                        </div>
                                 </div>
                                 <div class="mt-3">
                                     <button class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn"
@@ -82,7 +101,9 @@
                 name: '',
                 description: '',
                 image: '', 
+                imageName:'',
                 file: '', 
+                fileName:'',
                 category_id:'',
                 loading: false}
         },
@@ -91,9 +112,11 @@
             // ...mapActions({loginUser: 'LOGIN'}),
             onImageChanged (event) {
                     this.image = event.target.files[0]
+                    this.imageName = this.image.name;
             },
             onFileChanged (event) {
                     this.file = event.target.files[0]
+                    this.fileName = this.file.name;
             },
             async post() {
                this.loading = true;

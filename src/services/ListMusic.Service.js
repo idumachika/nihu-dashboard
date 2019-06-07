@@ -2,26 +2,23 @@ import {ApiService} from "./api.service";
 
 const ListMusicservice = {
     listmusic: async () => {
-        return await ApiService.get('/admin/music/list-music').then((res) => {
+        return await ApiService.get('/admin/music/list').then((res) => {
             window.console.log(res.data.data);
             return Promise.resolve(res.data.message);
         }).catch(() => {
             return Promise.reject(false);
         });
     },
-    deleteMusic: async (adminId,index) => {
-        return await ApiService.get('/admin/music/delete-music/'+adminId).then((res) => {
-            this.adminId.splice(index, 1);
+    deleteMusic: async (adminId) => {
+        return await ApiService.get('/admin/music/delete/'+adminId).then((res) => {
             return Promise.resolve(res.data);
-            
-
-        }).catch(() => {
+            }).catch(() => {
             return Promise.reject(false);
         });
     },
 
     editMusic: async (adminId) => {
-        return await ApiService.post('/admin/music/edit-music/'+adminId).then((res) => {
+        return await ApiService.post('/admin/music/edit/'+adminId).then((res) => {
             return Promise.resolve(res.data);
         }).catch(() => {
             return Promise.reject(false);

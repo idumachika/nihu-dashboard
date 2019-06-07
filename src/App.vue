@@ -9,4 +9,6 @@
     @import "assets/css/vendor.bundle.base.css";
     @import "assets/css/style.css";
     @import "assets/css/modal/modal.css";
+    @import "assets/css/custom.css"
+   
 </style>

@@ -1,30 +1,30 @@
 import {ApiService} from "./api.service";
 
-const ListOriginalCategoryService = {
-    listcategory: async () => {
-        return await ApiService.get('/admin/nihutv/list-category').then((res) => {
+const ListRecapService = {
+    listrecap: async () => {
+        return await ApiService.get('/admin/recap/list').then((res) => {
             window.console.log(res.data.data);
             return Promise.resolve(res.data.message);
         }).catch(() => {
             return Promise.reject(false);
         });
     },
-    deleteOriginal: async (adminId) => {
-        return await ApiService.get('/admin/nihutv/delete-category/'+adminId).then((res) => {
+    deleteRecap: async (adminId) => {
+        return await ApiService.get('/admin/recap/delete/'+adminId).then((res) => {
             return Promise.resolve(res.data);
         }).catch(() => {
             return Promise.reject(false);
         });
     },
-    editOriginalCategory: async (adminId) => {
+    editRecap: async (adminId) => {
         return await ApiService.post('/admin/original/edit-category/'+adminId).then((res) => {
             return Promise.resolve(res.data);
         }).catch(() => {
             return Promise.reject(false);
         });
     },
-    viewOriginalCategory: async (adminId) => {
-        return await ApiService.get('/admin/original/category-detail/'+adminId).then((res) => {
+    viewRecap: async (adminId) => {
+        return await ApiService.get('/admin/recap/detail/'+adminId).then((res) => {
             return Promise.resolve(res.data);
         }).catch(() => {
             return Promise.reject(false);
@@ -33,4 +33,4 @@ const ListOriginalCategoryService = {
     
 };
 
-export {ListOriginalCategoryService};
+export {ListRecapService};

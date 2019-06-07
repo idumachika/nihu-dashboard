@@ -7,24 +7,32 @@
                     <h3 class="page-title">
                         <span class="page-title-icon bg-gradient-primary text-white mr-2"> <i
                                 class="mdi mdi-cash-multiple"></i></span>
-                       Add Category
+                       Add View
                     </h3>
                 </div>
             </div>
             <div class="content-wrapper  align-items-center auth">
-        <Loader v-if="loading" :show-full="true" loading-text="Adding Category..."/>
+        <Loader v-if="loading" :show-full="true" loading-text="please wait..."/>
             <div class="col-md-6 grid-margin stretch-card">
-            <div class="card" @submit.prevent="post"> 
+            <div class="card" @submit.prevent="addView"> 
 
                 <div class="card-body">
                     <form class="forms-sample">
                         <div class="form-group">
-                        <label for="exampleInputUsername1">Music Name</label>
+                        <label for="exampleInputUsername1">Name</label>
                         <input type="text" class="form-control" id="exampleInputUsername1" v-model="name"  placeholder="Music Name">
                         </div>
                         <div class="form-group">
                         <label for="exampleInputEmail1">Description</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" v-model="description" placeholder="Write Here">
+                        <input type="text" class="form-control" id="exampleInputEmail1" v-model="content" placeholder="Write Here">
+                        </div>
+                        <div class="form-group">
+                        <label for="exampleInputEmail1">Overview</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" v-model="overview" placeholder="Write Here">
+                        </div>
+                        <div class="form-group">
+                        <label for="exampleInputEmail1">Category</label>
+                        <input type="number" class="form-control" id="exampleInputEmail1" v-model="category_id" placeholder="Write Here">
                         </div>
                         <div class="form-group">
                             <label>Image upload</label>
@@ -43,7 +51,7 @@
                         </div>
                     
                         
-                        <button type="submit" class="btn btn-gradient-primary mr-2">Add Category</button>
+                        <button type="submit" class="btn btn-gradient-primary mr-2">Add View</button>
                     </form>
                 </div>
               </div>
@@ -58,7 +66,7 @@
 <script>
     import Loader from "../../components/Loader/Loader";
     import Layout from '../../components/Layout';
-    import {AddTvShowCategoryService} from "../../services/AddTvShowCategory.Service";
+    import {AddViewService} from "../../services/AddView.services";
 
 
     
@@ -69,7 +77,9 @@
         data: function () {
             return {    
                 name: '',
-                description: '',
+                content: '',
+                overview:'',
+                category_id:'',
                 image: '',
                 imageName:'',
                 loading: false
@@ -82,14 +92,16 @@
                     this.image = event.target.files[0]
                       this.imageName = this.image.name;
             },
-            async post() {
+            async addView() {
                 this.loading = true;
                 let bodyFormData = new FormData()
-                bodyFormData.set('name', this.name);
-                bodyFormData.set('description', this.description);
-                bodyFormData.set('image', this.image);
+                bodyFormData.set('name',this.name);
+                bodyFormData.set('content',this.content);
+                bodyFormData.set('overview',this.overview);
+                bodyFormData.set('category_id',this.category_id);
+                bodyFormData.set('image',this.image);
                 
-                await AddTvShowCategoryService.addtvshowcategory(bodyFormData).then((res)=>{
+                await AddViewService.addview(bodyFormData).then((res)=>{
                     this.$toastr.success(res.message, {timeOut: 5000});
 
 

@@ -1,36 +1,37 @@
 import {ApiService} from "./api.service";
 
-const ListOriginalCategoryService = {
-    listcategory: async () => {
-        return await ApiService.get('/admin/nihutv/list-category').then((res) => {
+const ListViewservice = {
+    listView: async () => {
+        return await ApiService.get("/admin/views/list-views").then((res) => {
             window.console.log(res.data.data);
             return Promise.resolve(res.data.message);
         }).catch(() => {
             return Promise.reject(false);
         });
     },
-    deleteOriginal: async (adminId) => {
-        return await ApiService.get('/admin/nihutv/delete-category/'+adminId).then((res) => {
+    deleteView: async (userId) => {
+        return await ApiService.get('/admin/views/delete-views/'+userId).then((res) => {
             return Promise.resolve(res.data);
         }).catch(() => {
             return Promise.reject(false);
         });
     },
-    editOriginalCategory: async (adminId) => {
-        return await ApiService.post('/admin/original/edit-category/'+adminId).then((res) => {
+    editView: async (userId) => {
+        return await ApiService.post('/admin/views/edit-views/'+userId).then((res) => {
             return Promise.resolve(res.data);
         }).catch(() => {
             return Promise.reject(false);
         });
     },
-    viewOriginalCategory: async (adminId) => {
-        return await ApiService.get('/admin/original/category-detail/'+adminId).then((res) => {
+    viewDetails: async (userId) => {
+        return await ApiService.get('/admin/views/views-detail/'+userId).then((res) => {
             return Promise.resolve(res.data);
         }).catch(() => {
             return Promise.reject(false);
         });
     },
-    
 };
 
-export {ListOriginalCategoryService};
+export {ListViewservice};
+
+

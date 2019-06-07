@@ -19,7 +19,7 @@ const actions = {
             return Promise.resolve(authorize);
 
         }).catch((error) => {
-            return Promise.reject(error.response.data);
+            return Promise.reject(error);
         });
     },
     AUTHORISE_USER: async (context, token) => {

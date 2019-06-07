@@ -1,24 +1,22 @@
 <template>
     <Layout>
-         <div slot="head">
-            <modal name="view_tv_show" :height="300">
-                <div class="modal-header">
-                </div>
+        <div slot="head">
+            <modal name="music_details" :height="300">
                 <div class="modaly">
-                    <p> <span style="font-weight:bold">Name:</span> {{tvshowdetails.name}}</p>
-                    <p> <span style="font-weight:bold">Category id:</span> {{tvshowdetails.category_id}}</p>
-                    <p> <span style="font-weight:bold">Description:</span> {{tvshowdetails.content}}</p>
-                    <p> <span style="font-weight:bold">Overview :</span> {{tvshowdetails.overview}}</p>
-                    <p> <span style="font-weight:bold">Number of Share:</span> {{tvshowdetails.share}}</p>
+                    <p> <span style="font-weight:bold">Category Name:</span> {{viewData.category_name}}</p>
+                    <p> <span style="font-weight:bold">View Name:</span> {{viewData.name}}</p>
+                    <p> <span style="font-weight:bold">View Description:</span>  {{viewData.content}}</p>
+                    <p> <span syle="font-weight:bold">Category id:</span>{{viewData.category_id}}</p>
+                    <p> <span style="font-weight:bold">Date:</span>{{viewData.created_at}}</p>
                 </div>
                 <div class="modal-footer">
-                    <button @click="closeTvShowCategory" class="btn btn-primary mx-auto">Close</button>
+                    <button @click="closeMusic" class="btn btn-primary mx-auto">Close</button>
                 </div>
             </modal>
         </div>
-         <div slot="head">
-			<modal name="tvShow-edit" :height="500" @before-open="beforeOpen">
-				<div class="modal-header" style="textAlign:center">
+        <div slot="head">
+			<modal name="music-edit" :height="500" @before-open="beforeOpen">
+				<div class="modal-header">
 					Edit Event
 				</div>
 				<div class="modal-dialog" role="document">
@@ -26,16 +24,19 @@
 						<div class="modal-content" style="background-color:#FFF">
 							<div class="modal-body mx-3">
 								<div class="md-form mb-5">
-									<label data-error="wrong" data-success="right">TvShow Name</label>
+									<label data-error="wrong" data-success="right">Music Name</label>
 									<input type="text" v-model="editData.Name" class="form-control validate">
 								</div>
 								<div class="md-form mb-5">
-									<label data-error="wrong" data-success="right">TvShow Description</label>
-									<textarea type="text" v-model="editData.Description" class="form-control validate"></textarea>
+									<label data-error="wrong" data-success="right">Music Description</label>
+									<textarea type="email" v-model="editData.Description" class="form-control validate"></textarea>
 								</div>
-                            </div>
+
+								
+
+							</div>
 							<div class="modal-footer d-flex justify-content-center">
-								<button class="btn btn-danger">Edit TvShow</button>
+								<button class="btn btn-danger">Edit Music</button>
 							</div>
 						</div>
 					</form>
@@ -54,7 +55,7 @@
                     <h3 class="page-title">
                         <span class="page-title-icon bg-gradient-primary text-white mr-2"> <i
                                 class="mdi mdi-account-card-details"></i></span>
-                     Tv show
+                     Manage View
                     </h3>
                 </div>
                 <div class="row">
@@ -64,7 +65,7 @@
                                 <h4 class="card-title"></h4>
                                 <!-- <Datatable :fields="fields" :data="paymentsData" :perPage="1"> -->
                                 <!-- </Datatable> -->
-                                <Datatable :columns="columns" :data="adminData" :loading="loading" @openTvShowModal="openTvShowModal" @viewTvShow="viewTvShow" @DeletetvShow="DeletetvShow" :actions="actions"></Datatable>
+                                <Datatable :columns="columns" :data="adminData" :loading="loading" @ViewDetails="ViewDetails" @openViewModal="openViewModal" @DeleteView="DeleteView" :actions="actions"></Datatable>
                             </div>
                         </div>
                     </div>
@@ -76,11 +77,10 @@
 
 <script>
     import Layout from '../../components/Layout';
-    import {ListTvShowService} from "../../services/ListTvShow.Service";
+    import {ListViewservice} from "../../services/ListView.services";
     import Datatable from '../../components/Datatable/Datatable';
     import Loader from '../../components/Loader/Loader';
     import swal from 'sweetalert';
-
 
 
 
@@ -88,24 +88,26 @@
         {
             class: 'btn btn-primary',
             actionType: 'click',
-             callback: 'openTvShowModal',
-            args: ['AdminId','Name','Description'],
+            callback: 'openViewModal',
+            args: ['AdminId','Description','Name'],
             text: 'Edit',
             icon: "mdi mdi-account-edit mdi-18px ",
         },
         {
             class: 'btn btn-danger',
             actionType: 'click',
-            callback: 'DeletetvShow',
+            callback: 'DeleteView',
             args: ['AdminId'],
             text: 'Delete',
             icon: "mdi mdi-delete mdi-18px ",
 
+
+			
         },
         {
             class: 'btn btn-primary',
             actionType: 'click',
-             callback: 'viewTvShow',
+            callback: 'ViewDetails',
             args: ['AdminId'],
             text: 'View',
             icon:'mdi mdi-face mdi-18px'
@@ -120,26 +122,26 @@
         data() {
             return {
                 title: "Listuser",
-                columns: ["Cover", 'Name', 'Category', 'Status'],
+                columns: ["Thumbs", 'Name','Category', 'Status'],
                 perPage: 10,
                 sortable: false,
                 searchable: true,
                 loading: true,
-                tvshowdetails:{},
                 adminData: [],
+                viewData:{},
                 isLoading:false,
                 actions: action,
-                loadingText:"loading...",
+                loadingText:"please wait...",
                 callbacks: ['test', 'DeleteMusic'],
-                editData:{}
+                editData:{},
             }
         },
         async created() {
-            await ListTvShowService.listtvshow().then((response) => {
+            await ListViewservice.listView().then((response) => {
                 response.forEach(({ image:cover, name:music_name, content:des, category_id:id, status: status_readable,uuid: adminId}) => {
                     this.adminData.push({
-                        Cover: '<img src="'+cover +'">',
-                        Name:music_name,
+                        Thumbs: '<img src="'+cover+'">',
+                        Name: music_name,
                         Description:des,
                         Status: status_readable,
                         Category:id,
@@ -150,24 +152,25 @@
                 this.loading = false;
             }).catch((err) => window.console.log(err));
         },
-         methods: {
-            test(adminId) {
-                window.console.log("AdminId:" + adminId);
-            },
-            blockUser() {
-                window.alert('Blocked User');
-            },
-            closeTvShowCategory() {
-                this.$modal.hide('view_tv_show');
-            },
-            openTvShowModal(AdminId,Name, Description, ) {
+        methods: {
+                test(adminId,) {
+                    window.console.log("AdminId:" + adminId);
+                },
+                blockUser() {
+                    window.alert('Blocked User');
+                },
+                closeMusic() {
+                this.$modal.hide('music_details');
+                },
+                openViewModal(AdminId, Name, Description) {
 	
-                this.$modal.show('tvShow-edit', {AdminId: AdminId,Name:Name, Description:Description,});
-            },
-            beforeOpen(event) {
-                this.editData = event.params;
+				this.$modal.show('music-edit', {AdminId: AdminId, Name: Name, Description: Description});
+                },
+                beforeOpen(event) {
+				this.editData = event.params;
 			},
-            DeletetvShow(adminId){
+                
+            DeleteView(adminId){
                 swal({
                         title: "Are you sure?",
                         text: "Are you sure that you want to delete this event",
@@ -178,25 +181,25 @@
                     if(willDelete){
                             this.loadingText = "deleting music..."
                             this.isLoading = true;
-                            ListTvShowService.deleteTvshow(adminId).then((res) => {
+                            ListViewservice.deleteView(adminId).then((res) => {
                             this.isLoading= false;
+                            this.adminData.splice(adminId, 1);
                             this.$toastr.success(res.message, {timeOut: 5000});
                             }).catch((error) => {
                             this.$toastr.error(error.message, "delete Unsuccessfull!", {timeOut: 5000});
                             this.isLoading= false;
 
-                            });
+                        });
 
-                        }
+                    }
                 })
                     
                             
             },
-               
-            editTvShow(adminId){
+            EditView(adminId){
                     this.loadingText = "please wait..."
                     this.isLoading = true;
-                    ListTvShowService.editTvshow(adminId).then((res) => {
+                    ListViewservice.editView(adminId).then((res) => {
                     this.isLoading= false;
                     this.$toastr.success(res.message, {timeOut: 5000});
                 }).catch((error) => {
@@ -206,15 +209,16 @@
                 });
                             
             },
-            viewTvShow(adminId){
+            ViewDetails(adminId){
                     this.loadingText = "please wait..."
                     this.isLoading = true;
-                    ListTvShowService.viewTvshow(adminId).then((res) => {
+                    ListViewservice.viewDetails(adminId).then((res) => {
                     this.isLoading= false;
-                    this.tvshowdetails  = res.message
-                    this.$modal.show('view_tv_show');
+                    window.console.log(res)
+                    this.viewData = res.message
+                    this.$modal.show('music_details');
                 }).catch((error) => {
-                    this.$toastr.error(error.message, "show details Unsuccessfull!", {timeOut: 5000});
+                      window.console.log(error)
                     this.isLoading= false;
 
                 });

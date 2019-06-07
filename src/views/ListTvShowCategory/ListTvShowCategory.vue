@@ -1,14 +1,13 @@
 <template>
     <Layout>
         <div slot="head">
-            <modal name="view_tv_show" :height="390">
+            <modal name="view_tv_show" :height="300">
                 <div class="modal-header">
                 </div>
                 <div class="modaly">
-                    <img v-bind:src="tvshowdetails.image">
-                    <p>Category name: {{tvshowdetails.name}}</p>
-                    <p>Category id: {{tvshowdetails.category_id}}</p>
-                    <p>Category Description: {{tvshowdetails.description}}</p>
+                    <p> <span style="font-weight:bold">Category name: </span>{{tvshowdetails.name}}</p>
+                    <p> <span style="font-weight:bold">Category id:</span> {{tvshowdetails.category_id}}</p>
+                    <p> <span style="font-weight:bold">Category Description</span>: {{tvshowdetails.description}}</p>
                   
                     
                 </div>
@@ -17,25 +16,39 @@
                 </div>
             </modal>
         </div>
-        <!-- <div slot="head">
-            <modal name="comfirm-payment" :height="390">
-                <div class="modal-header">
-                    Payment details for {{confirmData.reference}}
-                </div>
-                <div class="modaly">
-                    <p>Customer name: {{confirmData.customer_name}}</p>
-                    <p>Customer email: {{confirmData.customer_email}}</p>
-                    <p>Amount: {{queryData.amount}}</p>
-                    <p>Payment type: {{queryData.payment_type}}</p>
-                    <p>Gateway response: {{queryData.gateway_response}}</p>
-                    <p v-if="queryData.card">Card Type: {{queryData.card.type}}</p>
-                </div>
-                <div class="modal-footer">
-                    <button @click="closeQueryPayment" class="btn btn-primary mx-auto">Close</button>
-                </div>
-            </modal>
-        </div> -->
-        <!-- partial -->
+        <div slot="head">
+			<modal name="tvShowCategory-edit" :height="500" @before-open="beforeOpen">
+				<div class="modal-header" style="textAlign:center">
+					Edit Event
+				</div>
+				<div class="modal-dialog" role="document">
+					<form @submit.prevent="eventedit(adminId)">
+						<div class="modal-content" style="background-color:#FFF">
+							<div class="modal-body mx-3">
+								<div class="md-form mb-5">
+									<label data-error="wrong" data-success="right">TvShow Name</label>
+									<input type="text" v-model="editData.Name" class="form-control validate">
+								</div>
+								<div class="md-form mb-5">
+                                    <label data-error="wrong" data-success="right">TvShow Description</label>
+                                    <textarea type="text" v-model="editData.Description"
+                                                class="form-control validate">
+                                    </textarea>
+								</div>
+                            </div>
+							<div class="modal-footer d-flex justify-content-center">
+								<button class="btn btn-danger">Edit TvShowCategory</button>
+							</div>
+						</div>
+					</form>
+				</div>
+
+				<div class="modal-footer">
+					<!-- <button @click="closeEditEvent" class="btn btn-primary mx-auto">Close</button> -->
+				</div>
+			</modal>
+		</div>
+    
         <div class="main-panel" slot="body">
             <Loader v-if="isLoading" :showFull=true :loading-text="loadingText"/>
             <div class="content-wrapper">
@@ -51,8 +64,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title"></h4>
-                                <Datatable :columns="columns" :data="paymentsData" @DeletetvShowCategory="DeletetvShowCategory" @viewtvshowCategory="viewtvshowCategory"
-                                           @editTvShowCategory="editTvShowCategory"
+                                <Datatable :columns="columns" :data="tvShowData" @DeletetvShowCategory="DeletetvShowCategory" @viewtvshowCategory="viewtvshowCategory"
+                                           @openTvShowModal="openTvShowModal"
                                            :loading="loading" :actions="actions">
                                 </Datatable>
                             </div>
@@ -68,15 +81,18 @@
     import Layout from '../../components/Layout';
     import {ListTvShowCategoryservice} from "../../services/ListTvShowCategory.Service";
     import Datatable from '../../components/Datatable/Datatable';
-    import Loader from '../../components/Loader/Loader'
+    import Loader from '../../components/Loader/Loader';
+    import swal from 'sweetalert';
+
 
 
     const action = [
         {
             class: 'btn btn-primary',
-            callback: 'confirmPayment',
-            args: ['AdminId'],
+            callback: 'openTvShowModal',
+            args: ['AdminId','Name', 'Description'],
             text: 'Edit',
+            icon: "mdi mdi-account-edit mdi-18px ",
             
         },
         {
@@ -84,12 +100,14 @@
             callback: 'DeletetvShowCategory',
             args: ['AdminId'],
             text: 'Delete',
+            icon: "mdi mdi-delete mdi-18px ",
         },
         {
             class: 'btn btn-primary',
             callback: 'viewtvshowCategory',
             args: ['AdminId'],
             text: 'View',
+            icon:'mdi mdi-face mdi-18px'
             
         },
 
@@ -100,17 +118,18 @@
         data() {
             return {
                 title: "Payment",
-                columns: ["Cover", 'Name','Description', 'Overview','Share', 'Status'],
+                columns: ["Thumbs", 'Name', 'Status'],
                 perPage: 10,
                 sortable: false,
                 searchable: true,
                 loading: true,
-                paymentsData: [],
+                tvShowData: [],
                 actions: action,
                 callbacks: ['test', 'delete '],
                 isLoading: false,
                 loadingText: "loading...",
-                tvshowdetails:{}
+                tvshowdetails:{},
+                editData:{}
                
             }
         },
@@ -120,12 +139,12 @@
        
         methods: {
             fetchPayments() {
-                this.paymentsData = [];
+                this.tvShowData = [];
 
                 ListTvShowCategoryservice.listCategory().then((response) => {
                 response.forEach(({image:cover, name:music_name, description:des, overview:view, share:music_share, status: status_readable,uuid: adminId}) => {
-                    this.paymentsData.push({
-                        Cover: '<img src="https://progiving-api.herokuapp.com/church_logo/' +cover +'">',
+                    this.tvShowData.push({
+                        Thumbs: '<img src="'+cover+'">',
                         Name: music_name,
                         Description:des,
                         Status: status_readable,
@@ -143,21 +162,45 @@
              closeTvShowCategory() {
             this.$modal.hide('view_tv_show');
             },
+            openTvShowModal(AdminId,Name, Description, ) {
+	
+                    this.$modal.show('tvShowCategory-edit', {AdminId: AdminId,Name:Name, Description:Description,});
+            },
+            beforeOpen(event) {
 
-           
+                this.editData = event.params;
+                    // console.log(event.params.event_name)
+			},
+                
+        
             DeletetvShowCategory(adminId){
-                    this.loadingText = "please wait..."
-                    this.isLoading = true;
-                    ListTvShowCategoryservice.deletetvshowCategory(adminId).then((res) => {
-                    this.isLoading= false;
-                    this.$toastr.success(res.message, {timeOut: 5000});
-                    }).catch((error) => {
-                    this.$toastr.error(error.message, "delete Unsuccessfull!", {timeOut: 5000});
-                    this.isLoading= false;
 
-                    });
+                swal({
+                            title: "Are you sure?",
+                            text: "Are you sure that you want to delete this event",
+                            icon: "warning",
+                            dangerMode: true,
+				}).then(willDelete => {
+
+                        if(willDelete){
+                            this.loadingText = "deleting TvShow..."
+                            this.isLoading = true;
+                            ListTvShowCategoryservice.deletetvshowCategory(adminId).then((res) => {
+                            this.isLoading= false;
+                            this.tvShowData.splice(adminId, 1);
+                            this.$toastr.success(res.message, {timeOut: 5000});
+                            }).catch((error) => {
+                            this.$toastr.error(error.message, "delete Unsuccessfull!", {timeOut: 5000});
+                            this.isLoading= false;
+
+                            });
+
+                        }
+                })
+                    
                             
-                },
+            },
+
             editTvShowCategory(adminId){
                     this.loadingText = "please wait..."
                     this.isLoading = true;
@@ -178,7 +221,6 @@
                     this.isLoading= false;
                     this.tvshowdetails  = res.message
                     this.$modal.show('view_tv_show');
-                    this.$toastr.success(res.message, {timeOut: 5000});
                     }).catch((error) => {
                     this.$toastr.error(error.message, "delete Unsuccessfull!", {timeOut: 5000});
                     this.isLoading= false;

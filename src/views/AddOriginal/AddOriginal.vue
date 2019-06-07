@@ -7,7 +7,7 @@
                     <h3 class="page-title">
                         <span class="page-title-icon bg-gradient-primary text-white mr-2"> <i
                                 class="mdi mdi-account-card-details"></i></span>
-                        Add Original
+                        Add Nihu Tv
                     </h3>
                 </div>
             </div>
@@ -25,30 +25,61 @@
                             <form class="pt-3" @submit.prevent="post">
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
-                                           placeholder="Fuck you challenge"  v-model="name" required>
+                                           placeholder="Music Name"  v-model="title" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="textarea" class="form-control form-control-lg"
-                                           id="exampleInputPassword1" placeholder="Write Here..." v-model="content"
+                                           id="exampleInputPassword1" placeholder="Write Here..." v-model="description"
                                            required>
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
-                                           placeholder="Category"  v-model="category_id" required>
+                                           placeholder="Duration"  v-model="duration" required>
                                 </div>
                                 <div class="form-group">
-                                    <input  class="form-control form-control-lg"
-                                           id="exampleInputPassword1" type="file" accept="image/*"  @change="onImageChanged"
-                                           required>
+                                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
+                                           placeholder="Year"  v-model="year" required>
+                                </div>
+                                 <div class="form-group">
+                                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
+                                           placeholder="Cast"  v-model="cast" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="file" class="form-control form-control-lg"
-                                           id="exampleInputPassword1"  accept="image/*"  @change="onFileChanged"
-                                           required>
+                                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
+                                           placeholder="Genre"  v-model="genre" required>
+                                </div>
+                                <div class="form-group">
+                                            <label>Image upload</label>
+                                            <input type="file" name="img[]" @change="onImageChanged"
+                                                   class="file-upload-default" ref="image">
+                                        <div class="input-group col-xs-12">
+                                                <input type="text" v-model='imageName' accept="image/*"
+                                                       class="form-control file-upload-info" disabled=""
+                                                       placeholder="Upload Image">
+                                                <span class="input-group-append">
+                                                <button class="file-upload-browse btn btn-gradient-primary"
+                                                @click="$refs.image.click()" type="button">Upload</button>
+                                                </span>
+                                        </div>
+                                </div>
+                                <div class="form-group">
+                                            <label>Audio/Video upload</label>
+                                            <input type="file" name="img[]" @change="onFileChanged"
+                                                   class="file-upload-default" ref="file">
+                                        <div class="input-group col-xs-12">
+                                                <input type="text" v-model='fileName' accept="video/*,image/*"
+                                                    class="form-control file-upload-info" disabled=""
+                                                    placeholder="Upload Image">
+                                            <span class="input-group-append">
+                                                    <button class="file-upload-browse btn btn-gradient-primary" type="button"
+                                                    @click="$refs.file.click()">Upload
+                                                    </button>
+                                            </span>
+                                        </div>
                                 </div>
                                 <div class="mt-3">
                                     <button class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn"
-                                            href="">Add Original
+                                            href="">Add Music
                                     </button>
                                 </div>
                             </form>
@@ -79,10 +110,17 @@
         components: {Loader, Layout},
         data: function () {
             return {    
-                name: '',
-                content: '',
+                title: '',
+                category: '',
+                description:'',
                 image: '', 
+                year:'',
+                cast:'',
+                duration:'',
+                genre:'',
+                imageName:'',
                 file: '', 
+                fileName:'',
                 category_id:'',
                 loading: false}
         },
@@ -91,15 +129,21 @@
             // ...mapActions({loginUser: 'LOGIN'}),
             onImageChanged (event) {
                     this.image = event.target.files[0]
+                    this.imageName = this.image.name;
             },
             onFileChanged (event) {
                     this.file = event.target.files[0]
+                    this.fileName = this.file.name;
             },
             async post() {
                this.loading = true;
                 let bodyFormData = new FormData()
-                bodyFormData.set('name', this.name);
-                bodyFormData.set('content', this.content);
+                bodyFormData.set('title', this.title);
+                bodyFormData.set('description', this.description);
+                bodyFormData.set('year', this.year);
+                bodyFormData.set('cast', this.cast);
+                bodyFormData.set('duration', this.duration);
+                bodyFormData.set('genre', this.genre);
                 bodyFormData.set('image', this.image);
                 bodyFormData.set('file', this.file);
                 bodyFormData.set('category_id', this.category_id);

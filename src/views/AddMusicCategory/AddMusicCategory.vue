@@ -11,13 +11,13 @@
                     </h3>
                 </div>
             </div>
-            <div class="content-wrapper  align-items-center auth">
+            <div class="content-wrapper  align-items-center ">
         <Loader v-if="loading" :show-full="true" loading-text="Adding Category..."/>
             <div class="col-md-6 grid-margin stretch-card">
-            <div class="card" @submit.prevent="post"> 
+            <div class="card" > 
 
                 <div class="card-body">
-                <form class="forms-sample">
+                <form class="forms-sample" @submit.prevent="post">
                     <div class="form-group">
                       <label for="exampleInputUsername1">Music Name</label>
                       <input type="text" class="form-control" id="exampleInputUsername1" v-model="name"  placeholder="Music Name">
@@ -27,59 +27,30 @@
                       <input type="text" class="form-control" id="exampleInputEmail1" v-model="description" placeholder="Write Here">
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputPassword1">Upload Image </label>
-                      <input type="file" class="form-control" id="exampleInputPassword1" @change="onFileChanged">
+                            <label>Image upload</label>
+                            <input type="file" name="img[]" @change="onFileChanged"
+                                class="file-upload-default" ref="image">
+                                    <div class="input-group col-xs-12">
+                                        <input type="text" v-model='imageName' accept="image/*"
+                                            class="form-control file-upload-info" disabled="" placeholder="Upload Image">
+                                                <span class="input-group-append">
+                                        <button class="file-upload-browse btn btn-gradient-primary"
+                                                @click="$refs.image.click()" type="button">Upload</button>
+                                        </span>
+                                    </div>
                     </div>
                   
-                    
-                    <button type="submit" class="btn btn-gradient-primary mr-2">Add Category</button>
+                        <div class="mt-3">
+                                    <button class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn"
+                                            href="">Add Music Category
+                                    </button>
+                        </div>
                   </form>
                 </div>
               </div>
             </div>
             </div>
-            <!-- <div class="container-scroller">
-        <Loader v-if="loading" :show-full="true"/>
-        <div class="container-fluid page-body-wrapper full-page-wrapper">
-            <div class="content-wrapper  align-items-center auth">
-                <div class="row w-100">
-                    <div class="col-md-5 mx-auto">
-                        <div class="auth-form-light text-left p-5">
-                            <div class="brand-logo">
-                            </div>
-                            <h4>Hello Admin! Credit wallet</h4>
-                            <form class="pt-3" @submit.prevent="post">
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
-                                           placeholder="iduma chika"  v-model="user" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-lg"
-                                           id="exampleInputPassword1" placeholder="$50000" v-model="amount_paid"
-                                           required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-lg"
-                                           id="exampleInputPassword1" placeholder="Write here ...." v-model="description"
-                                           required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-lg"
-                                           id="exampleInputPassword1" placeholder="40000" v-model="unit_worth"
-                                           required>
-                                </div>
-                                <div class="mt-3">
-                                    <button class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn"
-                                            href="">Top Up Wallet
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
+        
         </div>
         
     </Layout>
@@ -101,6 +72,7 @@
                 name: '',
                 description: '',
                 image: '',
+                imageName:'',
                 loading: false
                 }
         },
@@ -108,8 +80,8 @@
         methods: {
             // ...mapActions({loginUser: 'LOGIN'}),
             onFileChanged (event) {
-                    this.file = event.target.files[0]
-            },
+                    this.image = event.target.files[0]
+                    this.imageName = this.image.name;            },
             async post() {
                 this.loading = true;
                 let bodyFormData = new FormData()

@@ -22,11 +22,12 @@
                     </td>
                     <!--v-if="dontShowKey === action && dontShowValue === action.dontShowKey"-->
                     <td v-if="actions.length > 0">
-                        <span v-for="(action) in actions">
+                        <span v-for="(action,index) in actions" :key="index">
                             <button v-if="typeof action.showKey === 'undefined' || action.showKey.length === 0 || action.showWhen.indexOf(item[action.showKey]) !== -1"
                                     :title="action.title || ''"
                                     :class="action.class" class="btn-sm action-btn" v-bind="$attrs"
                                     @click="handleCallback(action.callback, filterObject(item, action.args))">
+                                      <i v-if="action.icon" :class="action.icon"></i>
                                 {{ action.text }}
                             </button>
                         </span>

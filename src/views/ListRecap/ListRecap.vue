@@ -1,41 +1,43 @@
 <template>
     <Layout>
-         <div slot="head">
-            <modal name="view_tv_show" :height="300">
-                <div class="modal-header">
-                </div>
+        <div slot="head">
+            <modal name="recap_details" :height="300">
                 <div class="modaly">
-                    <p> <span style="font-weight:bold">Name:</span> {{tvshowdetails.name}}</p>
-                    <p> <span style="font-weight:bold">Category id:</span> {{tvshowdetails.category_id}}</p>
-                    <p> <span style="font-weight:bold">Description:</span> {{tvshowdetails.content}}</p>
-                    <p> <span style="font-weight:bold">Overview :</span> {{tvshowdetails.overview}}</p>
-                    <p> <span style="font-weight:bold">Number of Share:</span> {{tvshowdetails.share}}</p>
+                    <p> <img alt="" :src="recapData"/></p>
+                    <p> <span style="font-weight:bold">Category id: </span>{{recapData.category_id}}</p>
+                    <!-- <p>Category name: {{musicData.category_name}}</p> -->
+                    <p> <span style="font-weight:bold">Recap Description:</span>  {{recapData.content}}</p>
+                    <p><span style="font-weight:bold">Name: </span> {{recapData.name}}</p>
+                    <p> <span style="font-weight:bold">Recap Overview:</span>{{recapData.overview}}</p>
                 </div>
                 <div class="modal-footer">
-                    <button @click="closeTvShowCategory" class="btn btn-primary mx-auto">Close</button>
+                    <button @click="closeMusic" class="btn btn-primary mx-auto">Close</button>
                 </div>
             </modal>
         </div>
-         <div slot="head">
-			<modal name="tvShow-edit" :height="500" @before-open="beforeOpen">
-				<div class="modal-header" style="textAlign:center">
-					Edit Event
+        <div slot="head">
+			<modal name="recap-edit" :height="500" @before-open="beforeOpen">
+				<div class="modal-header">
+					Edit Recap
 				</div>
 				<div class="modal-dialog" role="document">
 					<form @submit.prevent="eventedit(adminId)">
 						<div class="modal-content" style="background-color:#FFF">
 							<div class="modal-body mx-3">
 								<div class="md-form mb-5">
-									<label data-error="wrong" data-success="right">TvShow Name</label>
+									<label data-error="wrong" data-success="right">Recap Name</label>
 									<input type="text" v-model="editData.Name" class="form-control validate">
 								</div>
 								<div class="md-form mb-5">
-									<label data-error="wrong" data-success="right">TvShow Description</label>
-									<textarea type="text" v-model="editData.Description" class="form-control validate"></textarea>
+									<label data-error="wrong" data-success="right">Recap Description</label>
+									<textarea type="email" v-model="editData.Description" class="form-control validate"></textarea>
 								</div>
-                            </div>
+
+								
+
+							</div>
 							<div class="modal-footer d-flex justify-content-center">
-								<button class="btn btn-danger">Edit TvShow</button>
+								<button class="btn btn-danger">Edit Recap</button>
 							</div>
 						</div>
 					</form>
@@ -54,7 +56,7 @@
                     <h3 class="page-title">
                         <span class="page-title-icon bg-gradient-primary text-white mr-2"> <i
                                 class="mdi mdi-account-card-details"></i></span>
-                     Tv show
+                     Manage Recap
                     </h3>
                 </div>
                 <div class="row">
@@ -64,7 +66,7 @@
                                 <h4 class="card-title"></h4>
                                 <!-- <Datatable :fields="fields" :data="paymentsData" :perPage="1"> -->
                                 <!-- </Datatable> -->
-                                <Datatable :columns="columns" :data="adminData" :loading="loading" @openTvShowModal="openTvShowModal" @viewTvShow="viewTvShow" @DeletetvShow="DeletetvShow" :actions="actions"></Datatable>
+                                <Datatable :columns="columns" :data="adminData" :loading="loading" @ViewRecap="ViewRecap" @EditRecapModal="EditRecapModal" @DeleteRecap="DeleteRecap" :actions="actions"></Datatable>
                             </div>
                         </div>
                     </div>
@@ -76,11 +78,10 @@
 
 <script>
     import Layout from '../../components/Layout';
-    import {ListTvShowService} from "../../services/ListTvShow.Service";
+    import {ListRecapService} from "../../services/ListRecap.services";
     import Datatable from '../../components/Datatable/Datatable';
     import Loader from '../../components/Loader/Loader';
     import swal from 'sweetalert';
-
 
 
 
@@ -88,24 +89,26 @@
         {
             class: 'btn btn-primary',
             actionType: 'click',
-             callback: 'openTvShowModal',
-            args: ['AdminId','Name','Description'],
+            callback: 'EditRecapModal',
+            args: ['AdminId','Description','Name'],
             text: 'Edit',
             icon: "mdi mdi-account-edit mdi-18px ",
         },
         {
             class: 'btn btn-danger',
             actionType: 'click',
-            callback: 'DeletetvShow',
+            callback: 'DeleteRecap',
             args: ['AdminId'],
             text: 'Delete',
             icon: "mdi mdi-delete mdi-18px ",
 
+
+			
         },
         {
             class: 'btn btn-primary',
             actionType: 'click',
-             callback: 'viewTvShow',
+            callback: 'ViewRecap',
             args: ['AdminId'],
             text: 'View',
             icon:'mdi mdi-face mdi-18px'
@@ -114,32 +117,32 @@
 
 
     export default {
-        name: "Listuser",
+        name: "ListRecap",
 
         
         data() {
             return {
-                title: "Listuser",
-                columns: ["Cover", 'Name', 'Category', 'Status'],
+                title: "ListRecap",
+                columns: ["Thumbs", 'Name','Description', 'Category', 'Status'],
                 perPage: 10,
                 sortable: false,
                 searchable: true,
                 loading: true,
-                tvshowdetails:{},
                 adminData: [],
+                recapData:{},
                 isLoading:false,
                 actions: action,
-                loadingText:"loading...",
+                loadingText:"please wait...",
                 callbacks: ['test', 'DeleteMusic'],
-                editData:{}
+                editData:{},
             }
         },
         async created() {
-            await ListTvShowService.listtvshow().then((response) => {
-                response.forEach(({ image:cover, name:music_name, content:des, category_id:id, status: status_readable,uuid: adminId}) => {
+            await ListRecapService.listrecap().then((response) => {
+                response.forEach(({ image:cover, name:recap_name, content:des, category_id:id, status: status_readable,uuid: adminId}) => {
                     this.adminData.push({
-                        Cover: '<img src="'+cover +'">',
-                        Name:music_name,
+                        Thumbs: '<img src="'+cover+'">',
+                        Name: recap_name,
                         Description:des,
                         Status: status_readable,
                         Category:id,
@@ -150,24 +153,28 @@
                 this.loading = false;
             }).catch((err) => window.console.log(err));
         },
-         methods: {
-            test(adminId) {
-                window.console.log("AdminId:" + adminId);
-            },
-            blockUser() {
-                window.alert('Blocked User');
-            },
-            closeTvShowCategory() {
-                this.$modal.hide('view_tv_show');
-            },
-            openTvShowModal(AdminId,Name, Description, ) {
+        methods: {
+                test(adminId,) {
+                    window.console.log("AdminId:" + adminId);
+                },
+                blockUser() {
+                    window.alert('Blocked User');
+                },
+                closeMusic() {
+                this.$modal.hide('recap_details');
+                },
+                EditRecapModal(AdminId, Name, Description) {
 	
-                this.$modal.show('tvShow-edit', {AdminId: AdminId,Name:Name, Description:Description,});
+				this.$modal.show('recap-edit', {AdminId: AdminId, Name: Name, Description: Description});
+                },
+                beforeOpen(event) {
+				this.editData = event.params;
             },
-            beforeOpen(event) {
-                this.editData = event.params;
-			},
-            DeletetvShow(adminId){
+            closeRecap() {
+                this.$modal.hide('recap_details');
+                },
+                
+            DeleteRecap(adminId){
                 swal({
                         title: "Are you sure?",
                         text: "Are you sure that you want to delete this event",
@@ -178,25 +185,25 @@
                     if(willDelete){
                             this.loadingText = "deleting music..."
                             this.isLoading = true;
-                            ListTvShowService.deleteTvshow(adminId).then((res) => {
+                            ListRecapService.deleteRecap(adminId).then((res) => {
                             this.isLoading= false;
+                            this.adminData.splice(adminId, 1);
                             this.$toastr.success(res.message, {timeOut: 5000});
                             }).catch((error) => {
                             this.$toastr.error(error.message, "delete Unsuccessfull!", {timeOut: 5000});
                             this.isLoading= false;
 
-                            });
+                        });
 
-                        }
+                    }
                 })
                     
                             
             },
-               
-            editTvShow(adminId){
+            EditRecap(adminId){
                     this.loadingText = "please wait..."
                     this.isLoading = true;
-                    ListTvShowService.editTvshow(adminId).then((res) => {
+                    ListRecapService.editRecap(adminId).then((res) => {
                     this.isLoading= false;
                     this.$toastr.success(res.message, {timeOut: 5000});
                 }).catch((error) => {
@@ -206,15 +213,16 @@
                 });
                             
             },
-            viewTvShow(adminId){
+            ViewRecap(adminId){
                     this.loadingText = "please wait..."
                     this.isLoading = true;
-                    ListTvShowService.viewTvshow(adminId).then((res) => {
+                    ListRecapService.viewRecap(adminId).then((res) => {
                     this.isLoading= false;
-                    this.tvshowdetails  = res.message
-                    this.$modal.show('view_tv_show');
+                    window.console.log(res)
+                    this.recapData = res.message
+                    this.$modal.show('recap_details');
                 }).catch((error) => {
-                    this.$toastr.error(error.message, "show details Unsuccessfull!", {timeOut: 5000});
+                      window.console.log(error)
                     this.isLoading= false;
 
                 });

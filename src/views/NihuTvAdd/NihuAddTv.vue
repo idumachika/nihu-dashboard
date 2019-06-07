@@ -7,7 +7,7 @@
                     <h3 class="page-title">
                         <span class="page-title-icon bg-gradient-primary text-white mr-2"> <i
                                 class="mdi mdi-account-card-details"></i></span>
-                        Add Tv Show
+                        Add Nihu Tv
                     </h3>
                 </div>
             </div>
@@ -20,26 +20,33 @@
                         <div class="auth-form-light text-left p-5">
                             <div class="brand-logo">
                             </div>
-                            <h4>Hello  Admin! Add Tv Show  </h4>
+                            <h4>Hello  Admin! Add Music </h4>
                             <!-- <h6 class="font-weight-light">Sign in to continue.</h6> -->
                             <form class="pt-3" @submit.prevent="post">
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
-                                           placeholder="Music Name"  v-model="name" required>
+                                           placeholder="Music Name"  v-model="title" required>
                                 </div>
                                 <div class="form-group">
-                                    <textarea type="textarea" class="form-control form-control-lg"
-                                           id="exampleInputPassword1" placeholder="Write Here..." v-model="content"
-                                           required></textarea>
-                                </div>
-                                 <div class="form-group">
                                     <input type="textarea" class="form-control form-control-lg"
-                                           id="exampleInputPassword1" placeholder="Write Here..." v-model="overview"
+                                           id="exampleInputPassword1" placeholder="Write Here..." v-model="description"
                                            required>
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
-                                           placeholder="Category"  v-model="category_id" required>
+                                           placeholder="Duration"  v-model="duration" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
+                                           placeholder="Year"  v-model="year" required>
+                                </div>
+                                 <div class="form-group">
+                                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
+                                           placeholder="Cast"  v-model="cast" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
+                                           placeholder="Cast"  v-model="genre" required>
                                 </div>
                                 <div class="form-group">
                                             <label>Image upload</label>
@@ -55,7 +62,7 @@
                                                 </span>
                                         </div>
                                 </div>
-                                  <div class="form-group">
+                                <div class="form-group">
                                             <label>Audio/Video upload</label>
                                             <input type="file" name="img[]" @change="onFileChanged"
                                                    class="file-upload-default" ref="file">
@@ -72,7 +79,7 @@
                                 </div>
                                 <div class="mt-3">
                                     <button class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn"
-                                            href="">Add Tv Show
+                                            href="">Add Music
                                     </button>
                                 </div>
                             </form>
@@ -93,7 +100,7 @@
 <script>
     import Loader from "../../components/Loader/Loader";
     import Layout from '../../components/Layout';
-    import {AddTvShowService} from "../../services/AddTvShow.Service";
+    import {AddMusicService} from "../../services/AddMusic.Service";
 
 
     
@@ -103,10 +110,14 @@
         components: {Loader, Layout},
         data: function () {
             return {    
-                name: '',
-                overview: '',
-                content:'',
+                title: '',
+                category: '',
+                description:'',
                 image: '', 
+                year:'',
+                cast:'',
+                duration:'',
+                genre:'',
                 imageName:'',
                 file: '', 
                 fileName:'',
@@ -123,22 +134,20 @@
             onFileChanged (event) {
                     this.file = event.target.files[0]
                     this.fileName = this.file.name;
-
             },
             async post() {
                this.loading = true;
                 let bodyFormData = new FormData()
                 bodyFormData.set('name', this.name);
-                bodyFormData.set('overview', this.overview);
+                bodyFormData.set('description', this.description);
                 bodyFormData.set('image', this.image);
-                bodyFormData.set('content', this.content)
                 bodyFormData.set('file', this.file);
                 bodyFormData.set('category_id', this.category_id);
-                await AddTvShowService.addtvshow(bodyFormData).then((res)=> {
+                await AddMusicService.addmusic(bodyFormData).then((res)=> {
                     this.$toastr.success(res.message, {timeOut: 5000});
 
                 }).catch((error) => {
-                    this.$toastr.error(error.message, "Tv Show Creation failed!", {timeOut: 5000});
+                    this.$toastr.error(error.message, "Music  Creation failed!", {timeOut: 5000});
                 });
                 this.loading = false;
             }

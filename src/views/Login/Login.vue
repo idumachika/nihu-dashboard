@@ -7,7 +7,7 @@
                     <div class="col-lg-4 mx-auto">
                         <div class="auth-form-light text-left p-5">
                             <div class="brand-logo">
-                                <img src="../../assets/images/nihu-logo1.svg">
+                                <img src="../../assets/images/nihu-logo3.svg">
                             </div>
                             <h4>Hello! let's get started</h4>
                             <h6 class="font-weight-light">Sign in to continue.</h6>
@@ -22,7 +22,7 @@
                                            required>
                                 </div>
                                 <div class="mt-3">
-                                    <button class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn"
+                                    <button class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn btn-rounded"
                                             href="">SIGN IN
                                     </button>
                                 </div>
@@ -66,3 +66,23 @@
         }
     }
 </script>
+
+<style scoped>
+.content-wrapper {
+        background: #000000;
+    }
+
+    .auth .auth-form-light {
+        border-radius: 20px;
+        background: #101010;
+    }
+
+    h4, h6 {
+        color: white;
+    }
+
+    .auth form .form-group .form-control {
+        border-radius: 30px;
+        color: white;
+    }
+</style>

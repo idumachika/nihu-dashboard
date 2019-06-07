@@ -1,20 +1,51 @@
 <template>
     <Layout>
         <div slot="head">
-            <modal name="music_details" :height="390">
+            <modal name="music_details" :height="300">
                 <div class="modaly">
-                    <p> <img alt="" :src="musicData.image"/></p>
-                    <p>Category id: {{musicData.category_id}}</p>
-                    <!-- <p>Category name: {{musicData.category_name}}</p> -->
-                    <p> Music Description: {{musicData.description}}</p>
-                    <p>Music Name: {{musicData.name}}</p>
-                    <p>Number Of share: {{musicData.share}}</p>
+                    <p> <span syle="font-weight:bold">Category id:</span>{{musicData.category_id}}</p>
+                    <p> <span style="font-weight:bold">Music Description:</span>  {{musicData.description}}</p>
+                    <p> <span style="font-weight:bold">Music Name:</span> {{musicData.name}}</p>
+                    <p> <span style="font-weight:bold">Number Of share:</span>{{musicData.share}}</p>
                 </div>
                 <div class="modal-footer">
                     <button @click="closeMusic" class="btn btn-primary mx-auto">Close</button>
                 </div>
             </modal>
         </div>
+        <div slot="head">
+			<modal name="music-edit" :height="500" @before-open="beforeOpen">
+				<div class="modal-header">
+					Edit Event
+				</div>
+				<div class="modal-dialog" role="document">
+					<form @submit.prevent="eventedit(adminId)">
+						<div class="modal-content" style="background-color:#FFF">
+							<div class="modal-body mx-3">
+								<div class="md-form mb-5">
+									<label data-error="wrong" data-success="right">Music Name</label>
+									<input type="text" v-model="editData.Name" class="form-control validate">
+								</div>
+								<div class="md-form mb-5">
+									<label data-error="wrong" data-success="right">Music Description</label>
+									<textarea type="email" v-model="editData.Description" class="form-control validate"></textarea>
+								</div>
+
+								
+
+							</div>
+							<div class="modal-footer d-flex justify-content-center">
+								<button class="btn btn-danger">Edit Music</button>
+							</div>
+						</div>
+					</form>
+				</div>
+
+				<div class="modal-footer">
+					<!-- <button @click="closeEditEvent" class="btn btn-primary mx-auto">Close</button> -->
+				</div>
+			</modal>
+		</div>
         <!-- partial -->
         <div class="main-panel" slot="body">
             <Loader v-if="isLoading" :showFull=true :loading-text="loadingText"/>
@@ -23,7 +54,7 @@
                     <h3 class="page-title">
                         <span class="page-title-icon bg-gradient-primary text-white mr-2"> <i
                                 class="mdi mdi-account-card-details"></i></span>
-                     Music List
+                     Manage Music
                     </h3>
                 </div>
                 <div class="row">
@@ -33,7 +64,7 @@
                                 <h4 class="card-title"></h4>
                                 <!-- <Datatable :fields="fields" :data="paymentsData" :perPage="1"> -->
                                 <!-- </Datatable> -->
-                                <Datatable :columns="columns" :data="adminData" :loading="loading" @ViewMusic="ViewMusic" @EditMusic="EditMusic" @DeleteMusic="DeleteMusic" :actions="actions"></Datatable>
+                                <Datatable :columns="columns" :data="adminData" :loading="loading" @ViewMusic="ViewMusic" @openMusicModal="openMusicModal" @DeleteMusic="DeleteMusic" :actions="actions"></Datatable>
                             </div>
                         </div>
                     </div>
@@ -47,7 +78,8 @@
     import Layout from '../../components/Layout';
     import {ListMusicservice} from "../../services/ListMusic.Service";
     import Datatable from '../../components/Datatable/Datatable';
-    import Loader from '../../components/Loader/Loader'
+    import Loader from '../../components/Loader/Loader';
+    import swal from 'sweetalert';
 
 
 
@@ -55,23 +87,29 @@
         {
             class: 'btn btn-primary',
             actionType: 'click',
-            callback: 'EditMusic',
-            args: ['AdminId'],
-            text: 'Edit'
+            callback: 'openMusicModal',
+            args: ['AdminId','Description','Name'],
+            text: 'Edit',
+            icon: "mdi mdi-account-edit mdi-18px ",
         },
         {
             class: 'btn btn-danger',
             actionType: 'click',
             callback: 'DeleteMusic',
             args: ['AdminId'],
-            text: 'Delete'
+            text: 'Delete',
+            icon: "mdi mdi-delete mdi-18px ",
+
+
+			
         },
         {
             class: 'btn btn-primary',
             actionType: 'click',
             callback: 'ViewMusic',
             args: ['AdminId'],
-            text: 'View'
+            text: 'View',
+            icon:'mdi mdi-face mdi-18px'
         },
     ];
 
@@ -83,7 +121,7 @@
         data() {
             return {
                 title: "Listuser",
-                columns: ["Cover", 'Name','Description', 'Category', 'Status'],
+                columns: ["Thumbs", 'Name','Description', 'Category', 'Status'],
                 perPage: 10,
                 sortable: false,
                 searchable: true,
@@ -94,13 +132,14 @@
                 actions: action,
                 loadingText:"please wait...",
                 callbacks: ['test', 'DeleteMusic'],
+                editData:{},
             }
         },
         async created() {
             await ListMusicservice.listmusic().then((response) => {
                 response.forEach(({ image:cover, name:music_name, description:des, category_id:id, status: status_readable,uuid: adminId}) => {
                     this.adminData.push({
-                        Cover: '<img src="https://progiving-api.herokuapp.com/church_logo/' +cover +'">',
+                        Thumbs: '<img src="'+cover+'">',
                         Name: music_name,
                         Description:des,
                         Status: status_readable,
@@ -112,8 +151,8 @@
                 this.loading = false;
             }).catch((err) => window.console.log(err));
         },
-         methods: {
-                test(adminId) {
+        methods: {
+                test(adminId,) {
                     window.console.log("AdminId:" + adminId);
                 },
                 blockUser() {
@@ -122,34 +161,54 @@
                 closeMusic() {
                 this.$modal.hide('music_details');
                 },
-                
-                DeleteMusic(adminId){
-                    this.loadingText = "deleting music..."
-                    this.isLoading = true;
-                    ListMusicservice.deleteMusic(adminId).then((res) => {
-                    this.isLoading= false;
-                    this.$toastr.success(res.message, {timeOut: 5000});
-                    }).catch((error) => {
-                    this.$toastr.error(error.message, "delete Unsuccessfull!", {timeOut: 5000});
-                    this.isLoading= false;
-
-                    });
-                            
+                openMusicModal(AdminId, Name, Description) {
+	
+				this.$modal.show('music-edit', {AdminId: AdminId, Name: Name, Description: Description});
                 },
-                EditMusic(adminId){
+                beforeOpen(event) {
+				this.editData = event.params;
+			},
+                
+            DeleteMusic(adminId){
+                swal({
+                        title: "Are you sure?",
+                        text: "Are you sure that you want to delete this event",
+                        icon: "warning",
+                        dangerMode: true,
+				}).then(willDelete => {
+
+                    if(willDelete){
+                            this.loadingText = "deleting music..."
+                            this.isLoading = true;
+                            ListMusicservice.deleteMusic(adminId).then((res) => {
+                            this.isLoading= false;
+                            this.adminData.splice(adminId, 1);
+                            this.$toastr.success(res.message, {timeOut: 5000});
+                            }).catch((error) => {
+                            this.$toastr.error(error.message, "delete Unsuccessfull!", {timeOut: 5000});
+                            this.isLoading= false;
+
+                        });
+
+                    }
+                })
+                    
+                            
+            },
+            EditMusic(adminId){
                     this.loadingText = "please wait..."
                     this.isLoading = true;
                     ListMusicservice.editMusic(adminId).then((res) => {
                     this.isLoading= false;
                     this.$toastr.success(res.message, {timeOut: 5000});
-                    }).catch((error) => {
+                }).catch((error) => {
                     this.$toastr.error(error.message, "delete Unsuccessfull!", {timeOut: 5000});
                     this.isLoading= false;
 
-                    });
+                });
                             
-                },
-                ViewMusic(adminId){
+            },
+            ViewMusic(adminId){
                     this.loadingText = "please wait..."
                     this.isLoading = true;
                     ListMusicservice.viewMusic(adminId).then((res) => {
@@ -157,7 +216,7 @@
                     window.console.log(res)
                     this.musicData = res.message
                     this.$modal.show('music_details');
-                    }).catch((error) => {
+                }).catch((error) => {
                       window.console.log(error)
                     this.isLoading= false;
 

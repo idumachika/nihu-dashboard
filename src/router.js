@@ -14,7 +14,12 @@ import ListMusic from './views/ListMusic/ListMusic.vue';
 import AddOriginal from './views/AddOriginal/AddOriginal.vue';
 import AddOriginalCategory from './views/AddOriginalCategory/AddOriginalCategory.vue';
 import ListOriginal  from './views/ListOriginal/ListOriginal.vue';
-import ListOriginalCategory from './views/ListOriginalCategory/ListOriginalCategory.vue'
+import ListOriginalCategory from './views/ListOriginalCategory/ListOriginalCategory.vue';
+import ListRecap from './views/ListRecap/ListRecap.vue';
+import AddRecap from './views/AddRecap/AddRecap.vue';
+import ListView from './views/ListView/ListView.vue';
+import AddView from './views/AddView/AddView.vue';
+import AddNihuTv from './views/NihuTvAdd/NihuAddTv.vue'
 
 
 
@@ -48,12 +53,12 @@ const router = new Router({
             name: 'logout',
         },
         {
-            path: '/add_tv_show',
+            path: '/add-tv-show',
             name: 'AddTvShow',
             component: AddTvShow,
         },
         {
-            path: '/add_music_category',
+            path: '/add-music-category',
             name: 'AddMusicCategory',
             component: AddMusicCategory,
         },
@@ -73,18 +78,18 @@ const router = new Router({
             component: ListMusic,
         },
         {
-            path: '/tv_show/category',
+            path: '/tv-show/category',
             name: 'AddTvShowCategory',
             component: AddTvShowCategory,
         },
 
         {
-            path: '/list/tv_show',
+            path: '/list/tv-show',
             name: 'ListTvShow',
             component: ListTvShow,
         },
         {
-            path: '/list/tv_show_category',
+            path: '/list/tv-show-category',
             name: 'ListTvShowCategory',
             component: ListTvShowCategory,
         },
@@ -94,12 +99,12 @@ const router = new Router({
             component: AddOriginal,
         },
         {
-            path: '/add/original_categroy',
+            path: '/add/original-categroy',
             name: 'AddOriginalCategory',
             component: AddOriginalCategory,
         },
         {
-            path: '/list/list_original',
+            path: '/list/list-original',
             name: 'ListOriginal',
             component: ListOriginal,
         },
@@ -107,6 +112,31 @@ const router = new Router({
             path: '/list/list_original_categroy',
             name: 'ListOriginalCategory',
             component: ListOriginalCategory,
+        },
+        {
+            path: '/list/Recap',
+            name: 'listRecap',
+            component: ListRecap,
+        },
+        {
+            path: '/add/Recap',
+            name: 'addRecap',
+            component: AddRecap,
+        },
+        {
+            path: '/list/view',
+            name: 'listView',
+            component: ListView,
+        },
+        {
+            path: '/add/View',
+            name: 'addView',
+            component: AddView,
+        },
+        {
+            path: '/add/NihuTv',
+            name: 'AddNihuTv',
+            component: AddNihuTv,
         },
     ]
 });

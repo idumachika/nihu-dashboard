@@ -51,7 +51,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title"></h4>
-                                <Datatable :columns="columns" :data="paymentsData" @editOriginal="editOriginal" @deleteOriginal="deleteOriginal"
+                                <Datatable :columns="columns" :data="listCategory" @editOriginal="editOriginal" @deleteOriginal="deleteOriginal"
                                            @viewOriginal="viewOriginal"
                                            :loading="loading" :actions="actions">
                                 </Datatable>
@@ -77,6 +77,7 @@
             callback: 'editOriginal',
             args: ['AdminId'],
             text: 'Edit',
+            icon: "mdi mdi-account-edit mdi-18px ",
            
         },
         {
@@ -84,6 +85,8 @@
             callback: 'deleteOriginal',
             args: ['AdminId'],
             text: 'Delete',
+            icon: "mdi mdi-delete mdi-18px ",
+
         },
         {
             class: 'btn btn-primary',
@@ -99,12 +102,12 @@
         data() {
             return {
                 title: "Payment",
-                columns: ["Cover", 'Name','Description', 'Music', 'Status'],
+                columns: [ 'Name', 'Date'],
                 perPage: 10,
                 sortable: false,
                 searchable: true,
                 loading: true,
-                paymentsData: [],
+                listCategory: [],
                 actions: action,
                 callbacks: ['test', 'delete '],
                 isLoading: false,
@@ -118,16 +121,13 @@
         },
         methods: {
             fetchPayments() {
-                this.paymentsData = [];
+                this.listCategory = [];
 
-                ListOriginalCategoryService.listcategory().then((response) => {
-                response.forEach(({image:cover, name:music_name, description:des, music:sound, status: status_readable,uuid: adminId}) => {
-                    this.paymentsData.push({
-                        Cover: '<img src="https://progiving-api.herokuapp.com/church_logo/' +cover +'">',
+                 ListOriginalCategoryService.listcategory().then((response) => {
+                response.forEach(({ name:music_name,  created_at:date,uuid: adminId}) => {
+                    this.listCategory.push({
                         Name: music_name,
-                        Description:des,
-                        Status: status_readable,
-                        Music:sound,
+                        Date:date,
                         AdminId: adminId
                     });
                 });

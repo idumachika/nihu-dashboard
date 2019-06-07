@@ -13,7 +13,7 @@
     <!--<span class="loading-text" :class="{showLoadingTextFull: showFull}">{{loadingText}}</span>-->
     <!--</div>-->
     <div class="loader-scr">
-        <vue-element-loading :active="isLoading" :is-full-screen="showFull" :text="loadingText" color='#000'/>
+        <vue-element-loading :active="isLoading" :is-full-screen="showFull" :text="loadingText" color='#0774bb'/>
     </div>
 </template>
 
