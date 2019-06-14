@@ -1,7 +1,7 @@
 import {ApiService} from "./api.service";
 
-const AddOriginalService = {
-    addoriginal: async (data) => {
+const addNihuTv = {
+    addNihu: async (data) => {
         return await ApiService.post('/admin/nihutv/add', data).then((res) => {
             return Promise.resolve(res.data);
         }).catch(() => {
@@ -13,6 +13,6 @@ const AddOriginalService = {
 
 
 
-export {AddOriginalService};
+export {addNihuTv};
 
 

@@ -24,28 +24,48 @@
                             <!-- <h6 class="font-weight-light">Sign in to continue.</h6> -->
                             <form class="pt-3" @submit.prevent="post">
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
-                                           placeholder="Music Name"  v-model="title" required>
+                            <label data-error="wrong" data-success="right">Category Type</label>
+
+                                   <select v-model="category"
+                                                    class="form-control form-control-lg font-weight">
+                                                <option value="" disabled selected>Select Category Type</option>
+                                                <option :value="list.uuid" v-for="(list, index) in listCategory"
+                                                        v-bind:key="index"
+                                                        class="btn btn-outline-secondary">
+                                                    {{list.name}}
+                                                </option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="textarea" class="form-control form-control-lg"
-                                           id="exampleInputPassword1" placeholder="Write Here..." v-model="description"
+                                <label data-error="wrong" data-success="right">Title</label>
+
+                                    <input type="text" class="form-control form-control-lg"
+                                            placeholder="Tv Title" v-model="title"
                                            required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
+                                <label data-error="wrong" data-success="right">Description</label>
+
+                                    <input type="textarea" class="form-control form-control-lg"
+                                            placeholder="Tv Description..." v-model="description"
+                                           required>
+                                </div>
+                                <div class="form-group">
+                        <label data-error="wrong" data-success="right">Duration</label>
+
+                                    <input type="text" class="form-control form-control-lg" 
                                            placeholder="Duration"  v-model="duration" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
+                                    <input type="text" class="form-control form-control-lg"
                                            placeholder="Year"  v-model="year" required>
                                 </div>
                                  <div class="form-group">
-                                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
+                                    <input type="text" class="form-control form-control-lg"
                                            placeholder="Cast"  v-model="cast" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
+                                    <input type="text" class="form-control form-control-lg"
                                            placeholder="Genre"  v-model="genre" required>
                                 </div>
                                 <div class="form-group">
@@ -79,7 +99,7 @@
                                 </div>
                                 <div class="mt-3">
                                     <button class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn"
-                                            href="">Add Music
+                                            href="">Add Nihu Tv
                                     </button>
                                 </div>
                             </form>
@@ -100,7 +120,7 @@
 <script>
     import Loader from "../../components/Loader/Loader";
     import Layout from '../../components/Layout';
-    import {AddOriginalService} from "../../services/AddOriginal.Service";
+    import {addNihuTv} from "../../services/AddNihuTv.services";
 
 
     
@@ -124,6 +144,15 @@
                 category_id:'',
                 loading: false}
         },
+        computed: {
+        listCategory(){
+                return this.$store.getters.GET_CATEGORY
+                console.log(this.listCategory)
+        },
+        },
+        mounted(){
+            this.$store.dispatch('LOAD_CATEGORY_DATA')
+        },
         
         methods: {
             // ...mapActions({loginUser: 'LOGIN'}),
@@ -138,6 +167,7 @@
             async post() {
                this.loading = true;
                 let bodyFormData = new FormData()
+                bodyFormData.set('category', this.category);
                 bodyFormData.set('title', this.title);
                 bodyFormData.set('description', this.description);
                 bodyFormData.set('year', this.year);
@@ -146,8 +176,7 @@
                 bodyFormData.set('genre', this.genre);
                 bodyFormData.set('image', this.image);
                 bodyFormData.set('file', this.file);
-                bodyFormData.set('category_id', this.category_id);
-                await AddOriginalService.addoriginal(bodyFormData).then((res)=> {
+                await addNihuTv.addNihu(bodyFormData).then((res)=> {
                     this.$toastr.success(res.message, {timeOut: 5000});
 
                 }).catch((error) => {

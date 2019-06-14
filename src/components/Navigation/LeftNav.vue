@@ -149,23 +149,18 @@
                         <!-- <li class="nav-item"><a class="nav-link" href="../../pages/ui-features/buttons.html">Block
                             User</a></li> -->
                         <li class="nav-item">
-                            <router-link class="nav-link" :to="{name: 'AddOriginal'}"
-                                         v-bind:class="{ active: 'AddOriginal' === currentPage }">Add Nihu TV
+                            <router-link class="nav-link" :to="{name: 'AddNihuTv'}"
+                                         v-bind:class="{ active: 'AddNihuTv' === currentPage }">Add Nihu TV
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link class="nav-link" :to="{name: 'AddOriginalCategory'}"
-                                         v-bind:class="{ active: 'AddOriginalCategory' === currentPage }">Add Nihu TV Category
+                            <router-link class="nav-link" :to="{name: 'ListNihuTv'}"
+                                         v-bind:class="{ active: 'ListNihuTv' === currentPage }">List Nihu TV 
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link class="nav-link" :to="{name: 'ListOriginalCategory'}"
-                                         v-bind:class="{ active: 'ListOriginalCategory' === currentPage }">List Nihu TV Category
-                            </router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" :to="{name: 'ListOriginal'}"
-                                         v-bind:class="{ active: 'ListOriginal' === currentPage }"> List Nihu TV
+                            <router-link class="nav-link" :to="{name: 'ListNihuTvcategory'}"
+                                         v-bind:class="{ active: 'ListNihuTvcategory' === currentPage }"> List Nihu TV  Category
                             </router-link>
                         </li>
                     </ul>

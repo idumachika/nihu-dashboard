@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Users from './modules/user/users'
 import VuexPersist from 'vuex-persist'
+import Categorys from './modules/category/categorys'
 
 Vue.use(Vuex);
 
@@ -24,7 +25,8 @@ export default new Vuex.Store({
 
   },
   modules: {
-    User: Users
+    User: Users,
+    Category: Categorys
   },
   plugins: [vuexPersist.plugin]
 });

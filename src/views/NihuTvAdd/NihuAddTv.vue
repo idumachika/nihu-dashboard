@@ -138,11 +138,15 @@
             async post() {
                this.loading = true;
                 let bodyFormData = new FormData()
+                 bodyFormData.set('category', this.name);
                 bodyFormData.set('name', this.name);
                 bodyFormData.set('description', this.description);
+                bodyFormData.set('duration', this.duration);
+                bodyFormData.set('year', this.year);
+                bodyFormData.set('cast', this.cast);
+                bodyFormData.set('genre', this.genre);
                 bodyFormData.set('image', this.image);
                 bodyFormData.set('file', this.file);
-                bodyFormData.set('category_id', this.category_id);
                 await AddMusicService.addmusic(bodyFormData).then((res)=> {
                     this.$toastr.success(res.message, {timeOut: 5000});
 

@@ -28,7 +28,7 @@
 								</div>
 								<div class="md-form mb-5">
 									<label data-error="wrong" data-success="right">Music Description</label>
-									<textarea type="email" v-model="editData.Description" class="form-control validate"></textarea>
+									<textarea type="email" v-model="editData.Description" class="form-control validate textSize"></textarea>
 								</div>
                             </div>
 							<div class="modal-footer d-flex justify-content-center">

@@ -11,15 +11,13 @@ import ListTvShow from './views/ListTvShow/ListTvShow.vue';
 import ListTvShowCategory from './views/ListTvShowCategory/ListTvShowCategory.vue';
 import ListCategory from './views/ListCategory/ListCategory.vue';
 import ListMusic from './views/ListMusic/ListMusic.vue';
-import AddOriginal from './views/AddOriginal/AddOriginal.vue';
-import AddOriginalCategory from './views/AddOriginalCategory/AddOriginalCategory.vue';
-import ListOriginal  from './views/ListOriginal/ListOriginal.vue';
-import ListOriginalCategory from './views/ListOriginalCategory/ListOriginalCategory.vue';
+import AddNihuTv from './views/AddNihuTv/AddNihuTv.vue';
+import NihuTvCategory  from './views/NihuTvCategory/NihuTvCategory.vue';
+import ListNihuTv from './views/ListNihuTv/ListNihuTv.vue';
 import ListRecap from './views/ListRecap/ListRecap.vue';
 import AddRecap from './views/AddRecap/AddRecap.vue';
 import ListView from './views/ListView/ListView.vue';
 import AddView from './views/AddView/AddView.vue';
-import AddNihuTv from './views/NihuTvAdd/NihuAddTv.vue'
 
 
 
@@ -94,24 +92,20 @@ const router = new Router({
             component: ListTvShowCategory,
         },
         {
-            path: '/add/original',
-            name: 'AddOriginal',
-            component: AddOriginal,
+            path: '/add/Nihu-tv',
+            name: 'AddNihuTv',
+            component: AddNihuTv,
+        },
+        
+        {
+            path: '/nihutv/list',
+            name: 'ListNihuTvcategory',
+            component: NihuTvCategory,
         },
         {
-            path: '/add/original-categroy',
-            name: 'AddOriginalCategory',
-            component: AddOriginalCategory,
-        },
-        {
-            path: '/list/list-original',
-            name: 'ListOriginal',
-            component: ListOriginal,
-        },
-        {
-            path: '/list/list_original_categroy',
-            name: 'ListOriginalCategory',
-            component: ListOriginalCategory,
+            path: '/list/Nihu-tv',
+            name: 'ListNihuTv',
+            component: ListNihuTv,
         },
         {
             path: '/list/Recap',

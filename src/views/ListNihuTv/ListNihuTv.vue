@@ -51,7 +51,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title"></h4>
-                                <Datatable :columns="columns" :data="listCategory" @editOriginal="editOriginal" @deleteOriginal="deleteOriginal"
+                                <Datatable :columns="columns" :data="listnihu" @editOriginal="editOriginal" @deleteOriginal="deleteOriginal"
                                            @viewOriginal="viewOriginal"
                                            :loading="loading" :actions="actions">
                                 </Datatable>
@@ -66,7 +66,7 @@
 
 <script>
     import Layout from '../../components/Layout';
-    import {ListOriginalCategoryService} from "../../services/ListOriginalCategory.Service";
+    import {ListNihuTvService} from "../../services/ListNihuTv.Service";
     import Datatable from '../../components/Datatable/Datatable';
     import Loader from '../../components/Loader/Loader'
 
@@ -102,12 +102,12 @@
         data() {
             return {
                 title: "Payment",
-                columns: [ 'Name', 'Date'],
+                columns: [ 'Thumbs', 'Title', 'Genre', 'Duration'],
                 perPage: 10,
                 sortable: false,
                 searchable: true,
                 loading: true,
-                listCategory: [],
+                listnihu: [],
                 actions: action,
                 callbacks: ['test', 'delete '],
                 isLoading: false,
@@ -121,13 +121,15 @@
         },
         methods: {
             fetchPayments() {
-                this.listCategory = [];
+                this.listnihu = [];
 
-                 ListOriginalCategoryService.listcategory().then((response) => {
-                response.forEach(({ name:music_name,  created_at:date,uuid: adminId}) => {
-                    this.listCategory.push({
-                        Name: music_name,
-                        Date:date,
+                 ListNihuTvService.listnihu().then((response) => {
+                response.forEach(({ image_url:thumbs, title:name,  genre:movie_genre, duration:time,uuid: adminId}) => {
+                    this.listnihu.push({
+                         'Thumbs': '<img src='+thumbs+'/>',
+                        'Title':name,
+                         'Genre':movie_genre,
+                         'Duration':time,
                         AdminId: adminId
                     });
                 });
@@ -184,5 +186,10 @@
 </script>
 
 <style scoped>
+
+.font-size{
+
+    font-size: 18px
+}
 
 </style>

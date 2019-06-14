@@ -26,11 +26,11 @@
 							<div class="modal-body mx-3">
 								<div class="md-form mb-5">
 									<label data-error="wrong" data-success="right">Recap Name</label>
-									<input type="text" v-model="editData.Name" class="form-control validate">
+									<input type="text" v-model="editData.Name" class="form-control validate textSize">
 								</div>
 								<div class="md-form mb-5">
 									<label data-error="wrong" data-success="right">Recap Description</label>
-									<textarea type="email" v-model="editData.Description" class="form-control validate"></textarea>
+									<textarea type="email" v-model="editData.Description" class="form-control validate textSize"></textarea>
 								</div>
 
 								
@@ -234,5 +234,8 @@
 </script>
 
 <style scoped>
+.textSize{
+    font-size: 18px;
+}
 
 </style>

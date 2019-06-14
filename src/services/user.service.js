@@ -7,7 +7,7 @@ const userService = {
                 let token = res.data.data.token;
                 resolve(token);
             }).catch((error) => {
-                reject(error.response.data);
+                reject(error);
             });
         });
     },

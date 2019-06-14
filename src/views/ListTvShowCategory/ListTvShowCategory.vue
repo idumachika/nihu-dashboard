@@ -27,7 +27,7 @@
 							<div class="modal-body mx-3">
 								<div class="md-form mb-5">
 									<label data-error="wrong" data-success="right">TvShow Name</label>
-									<input type="text" v-model="editData.Name" class="form-control validate">
+									<input type="text" v-model="editData.Name" class="form-control validate font-size">
 								</div>
 								<div class="md-form mb-5">
                                     <label data-error="wrong" data-success="right">TvShow Description</label>
