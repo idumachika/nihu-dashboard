@@ -7,7 +7,7 @@
                     <h3 class="page-title">
                         <span class="page-title-icon bg-gradient-primary text-white mr-2"> <i
                                 class="mdi mdi-account-card-details"></i></span>
-                        Add Nihu Tv
+                        Add Nihu TV
                     </h3>
                 </div>
             </div>
@@ -20,7 +20,7 @@
                         <div class="auth-form-light text-left p-5">
                             <div class="brand-logo">
                             </div>
-                            <h4>Hello  Admin! Add Music </h4>
+                            <h4>Hello  Admin! Add Movies </h4>
                             <!-- <h6 class="font-weight-light">Sign in to continue.</h6> -->
                             <form class="pt-3" @submit.prevent="post">
                                 <div class="form-group">
@@ -69,7 +69,7 @@
                                            placeholder="Genre"  v-model="genre" required>
                                 </div>
                                 <div class="form-group">
-                                            <label>Image upload</label>
+                                            <label>Thumbnail Upload</label>
                                             <input type="file" name="img[]" @change="onImageChanged"
                                                    class="file-upload-default" ref="image">
                                         <div class="input-group col-xs-12">
@@ -83,7 +83,7 @@
                                         </div>
                                 </div>
                                 <div class="form-group">
-                                            <label>Audio/Video upload</label>
+                                            <label>Audio/Video Upload</label>
                                             <input type="file" name="img[]" @change="onFileChanged"
                                                    class="file-upload-default" ref="file">
                                         <div class="input-group col-xs-12">
@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="mt-3">
                                     <button class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn"
-                                            href="">Add Nihu Tv
+                                            href="">Add Nihu TV
                                     </button>
                                 </div>
                             </form>
